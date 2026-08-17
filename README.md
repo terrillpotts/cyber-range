@@ -2,6 +2,8 @@
 
 **[Launch The Cyber Range →](https://terrillpotts.github.io/cyber-range/)**
 
+![The Cyber Range dashboard](screenshot.jpg)
+
 An interactive, HTB/THM-style training platform for CompTIA CySA+ (exam CS0-003). Work through lessons, hands-on terminal labs, and quizzes across all four exam domains, then sit a mixed final exam to prove it stuck. Built as a single self-contained HTML file — no backend, no build step, no dependencies.
 
 ## What it is
