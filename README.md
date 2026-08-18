@@ -1,14 +1,16 @@
-# The Cyber Range — CySA+ (CS0-003) Training Platform
+# The Cyber Range — Self-Paced Security Training
 
 **[Launch The Cyber Range →](https://terrillpotts.github.io/cyber-range/)**
 
 ![The Cyber Range dashboard](screenshot.jpg)
 
-An interactive, HTB/THM-style training platform for CompTIA CySA+ (exam CS0-003). Work through lessons, hands-on terminal labs, and quizzes across all four exam domains, then sit a mixed final exam to prove it stuck. Built as a single self-contained HTML file — no backend, no build step, no dependencies.
+An interactive, HTB/THM-style training platform organized into three independently-tracked topic areas: **Cybersecurity**, **Cloud**, and **Networking**. XP, rank, and streak are tracked separately per track. Built as a single self-contained HTML file — no backend, no build step, no dependencies.
 
 ## What it is
 
-- **4 exam domains**, each with lessons, hands-on terminal-style labs, and a capstone investigation:
+**Cybersecurity** is fully built out as a CompTIA CySA+ (exam CS0-003) curriculum — lessons, hands-on terminal labs, and quizzes across all four exam domains, capped with a mixed final exam. **Cloud** and **Networking** are placeholder tracks reserved for future content.
+
+- **4 exam domains** (under Cybersecurity), each with lessons, hands-on terminal-style labs, and a capstone investigation:
   - **D1 — Security Operations**: log/architecture analysis, indicators of compromise, threat intel & hunting, phishing/email security, SOC tooling & automation
   - **D2 — Vulnerability Management**: scanning & CVSS, prioritizing beyond CVSS (EPSS, exposure, zero-days), cloud/container vulnerabilities, web app vulnerability classes (XSS, injection, SSRF, RCE), scanning tools & frameworks
   - **D3 — Incident Response & Management**: attack frameworks (Kill Chain, Diamond Model, ATT&CK), the IR lifecycle, containment/eradication/recovery, digital forensics fundamentals

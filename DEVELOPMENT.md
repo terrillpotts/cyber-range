@@ -17,11 +17,19 @@ Terrill supplied the official CompTIA CySA+ CS0-003 Exam Objectives PDF (Documen
 - `QUIZZES` — all quiz question banks, keyed by lesson.
 - `LESSONS` — lesson HTML content, keyed by lesson.
 - `LABS` — terminal lab file systems + objectives, keyed by lab.
-- `DOMAINS` — the 4 domains, each with an ordered `nodes` array (lesson/lab refs, XP, unlock sequencing).
-- `EXAM_POOL` / `EXAM_COMPOSITION` / `buildExam()` — final exam, built from `QUIZZES` (no duplicated content).
+- `DOMAINS_CYBERSECURITY` — the 4 CS0-003 domains, each with an ordered `nodes` array (lesson/lab refs, XP, unlock sequencing). This is the only section with real content so far.
+- `SECTIONS` — top-level tracks above domains: `cybersecurity` (live, `domains: DOMAINS_CYBERSECURITY`), `cloud` and `networking` (placeholders, `domains: []`). Adding a 2nd/3rd real section means populating one of these `domains` arrays in the same shape as `DOMAINS_CYBERSECURITY` — nothing else about the section plumbing needs to change.
+- `EXAM_POOL` / `EXAM_COMPOSITION` / `buildExam()` — final exam, built from `QUIZZES` (no duplicated content). Cybersecurity-only for now.
 - `shuffleQuestion()` — reorders each question's options at render time (see "Known gotchas" below — this was a real bug, don't remove it).
-- `state` / `STORAGE_KEY` (`range_cysa_progress_v1`) — progress persistence via `localStorage`, plus Export/Import as JSON (no cross-device sync capability exists for Claude artifacts, so this is the workaround).
-- `render()` / `view` — simple hand-rolled router (`dashboard` / `domain` / `lesson` / `lab` / `exam`), no framework.
+- **Reference-swap pattern (added 2026-08-18, see "Sections architecture" below):** `state` and `DOMAINS` are plain top-level `var`s that get *reassigned* by `setSection(id)` to point at whichever section is currently active — `state = sectionStates[id]`, `DOMAINS = sec.domains`. Every pre-existing function (`domainById`, `overallProgress`, `mountQuiz`, `renderLab`, `mountExam`, etc.) still reads the bare `state`/`DOMAINS` globals unmodified; they transparently operate on whatever section is active because the variable itself was swapped, not because those functions know about sections. **Don't "fix" this by threading a `sectionId` param through those functions — that's the whole point of the pattern.**
+- `sectionStates` / `STORAGE_KEY` (`range_cysa_progress_v1`) — one `{xp, completed, quizScores, labProgress, streak, lastVisit, examPassed, examAttempts, examBest}` object per section, persisted together under a single `localStorage` key. `normalizeSectionStates()` migrates the old pre-sections flat-object shape into `sections.cybersecurity` on load, so existing users don't lose progress. Export/Import now serialize/restore all sections at once, not just the active one.
+- `render()` / `view` — hand-rolled router. `view.type` is `home` / `dashboard` / `domain` / `lesson` / `lab` / `exam`; every type except `home` also carries `sectionId`. `go(v)` calls `setSection(v.sectionId)` before switching `view`, whenever `v.sectionId` is present.
+
+### Sections architecture (added 2026-08-18)
+
+Three top-level tracks now sit above domains: **Cybersecurity** (all pre-existing CS0-003 content, unchanged), **Cloud** and **Networking** (empty placeholders — real nav destinations that render a "coming soon" dashboard via the `if(!DOMAINS.length)` early-return in `renderDashboard()`). XP/rank/streak/exam progress are tracked independently per section via `sectionStates`, not globally. The Home page (`renderHome()`) lists all 3 sections with each one's own XP/rank/progress, pulled directly from `sectionStates[id]` (not the mutable `state` pointer, since Home must show all sections at once regardless of which is "current").
+
+To add real content to Cloud or Networking later: build a `DOMAINS_CLOUD` (or `_NETWORKING`) array in the exact shape of `DOMAINS_CYBERSECURITY`, point that section's `domains` at it in `SECTIONS`, and everything else (nav nesting, dashboard, domain/lesson/lab/exam rendering, XP awarding, progress tracking) works with zero further changes — that's the payoff of the reference-swap pattern above.
 
 ## How to keep developing this
 
