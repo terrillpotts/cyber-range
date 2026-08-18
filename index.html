@@ -78,6 +78,7 @@ button{font-family:inherit;}
 .exam-nav .dot{ background:var(--accent); }
 .nav-item .n-title{ flex:1; }
 .nav-item .n-pct{ font-family:var(--font-mono); font-size:.7rem; color:var(--text-faint); }
+.nav-item.nav-sub{ margin-left:14px; width:calc(100% - 14px); }
 .nav-mini-bar{ height:3px; border-radius:2px; background:var(--surface-3); margin:2px 10px 6px; overflow:hidden; }
 .nav-mini-bar > i{ display:block; height:100%; background:var(--accent-cool); }
 
@@ -277,7 +278,7 @@ button{font-family:inherit;}
   <aside class="sidebar">
     <div>
       <div class="brand"><span class="path">THE </span><span class="name">CYBER RANGE</span><span class="cursor"></span></div>
-      <div class="tagline">SOC training ground · CS0-003</div>
+      <div class="tagline">Cybersecurity · Cloud · Networking</div>
     </div>
     <nav class="nav" id="nav-list"></nav>
     <div class="sidebar-spacer"></div>
@@ -1637,7 +1638,7 @@ vulnTypesLab: {
 /* ============================================================
    DOMAIN / NODE STRUCTURE
 ============================================================ */
-var DOMAINS = [
+var DOMAINS_CYBERSECURITY = [
   { id:'secops', code:'D1', name:'Security Operations', weight:33, tagline:'Detect the signal in the noise.', status:'live',
     nodes:[
       { id:'arch', type:'lesson', title:'SOC Foundations: Architecture & Log Sources', xp:100, minutes:12, difficulty:'Easy', lessonKey:'arch', quizKey:'arch' },
@@ -1698,6 +1699,26 @@ var DOMAINS = [
 ];
 
 /* ============================================================
+   SECTIONS (top-level tracks above domains)
+   Cybersecurity carries all existing CS0-003 content. Cloud and
+   Networking are placeholders — real nav destinations with their
+   own progression, no content yet.
+============================================================ */
+var SECTIONS = [
+  { id:'cybersecurity', name:'Cybersecurity', tagline:'SOC training ground · CS0-003', status:'live', domains: DOMAINS_CYBERSECURITY },
+  { id:'cloud', name:'Cloud', tagline:'Cloud security fundamentals.', status:'coming-soon', domains: [] },
+  { id:'networking', name:'Networking', tagline:'Network engineering & defense.', status:'coming-soon', domains: [] }
+];
+function sectionById(id){ for(var i=0;i<SECTIONS.length;i++){ if(SECTIONS[i].id===id) return SECTIONS[i]; } return null; }
+
+/* currentSectionId/DOMAINS/state (declared below) are reassigned together
+   whenever the active section changes (see setSection()) — every existing
+   function that reads the bare `state`/`DOMAINS` globals keeps working
+   unmodified, it just transparently operates on whichever section is active. */
+var currentSectionId = 'cybersecurity';
+var DOMAINS = DOMAINS_CYBERSECURITY;
+
+/* ============================================================
    FINAL EXAM (pooled from the domain quizzes above, mixed & weighted
    to roughly match real CS0-003 domain weighting: 33/30/20/17)
 ============================================================ */
@@ -1748,8 +1769,8 @@ function buildExam(){
 /* ============================================================
    ROUTER STATE (must exist before any early render call)
 ============================================================ */
-var view = { type:'dashboard' };
-function go(v){ view = v; render(); window.scrollTo(0,0); }
+var view = { type:'home' };
+function go(v){ if(v.sectionId) setSection(v.sectionId); view = v; render(); window.scrollTo(0,0); }
 
 /* ============================================================
    STATE / PERSISTENCE
@@ -1766,19 +1787,45 @@ function defaultState(){
   return { xp:0, completed:{}, quizScores:{}, labProgress:{}, streak:0, lastVisit:null,
     examPassed:false, examAttempts:0, examBest:null };
 }
-var state = loadState();
-
-function loadState(){
-  try{
-    var raw = localStorage.getItem(STORAGE_KEY);
-    if(!raw) return defaultState();
-    var parsed = JSON.parse(raw);
-    var d = defaultState();
-    for(var k in d){ if(parsed[k] === undefined) parsed[k] = d[k]; }
-    return parsed;
-  }catch(e){ return defaultState(); }
+function normalizeSectionState(raw){
+  var d = defaultState();
+  raw = raw || {};
+  for(var k in d){ if(raw[k] === undefined) raw[k] = d[k]; }
+  return raw;
 }
-function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); renderChrome(); }
+/* Pre-sections saves stored one flat state object directly under STORAGE_KEY
+   (xp/completed at the top level). That legacy shape becomes the cybersecurity
+   section's state on load, since Cybersecurity is the only section that existed
+   before Cloud/Networking were added — this keeps existing users' progress. */
+function normalizeSectionStates(raw){
+  raw = raw || {};
+  var legacy = raw.xp !== undefined || raw.completed !== undefined;
+  var out = {};
+  SECTIONS.forEach(function(sec){
+    if(legacy) out[sec.id] = sec.id === 'cybersecurity' ? normalizeSectionState(raw) : normalizeSectionState(null);
+    else out[sec.id] = normalizeSectionState(raw[sec.id]);
+  });
+  return out;
+}
+function loadSectionStates(){
+  try{
+    var rawStr = localStorage.getItem(STORAGE_KEY);
+    if(!rawStr) return normalizeSectionStates(null);
+    return normalizeSectionStates(JSON.parse(rawStr));
+  }catch(e){ return normalizeSectionStates(null); }
+}
+var sectionStates = loadSectionStates();
+var state = sectionStates[currentSectionId];
+
+function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(sectionStates)); renderChrome(); }
+
+function setSection(id){
+  currentSectionId = id;
+  var sec = sectionById(id);
+  DOMAINS = sec.domains;
+  state = sectionStates[id];
+  touchStreak();
+}
 
 function dayDiff(a,b){ return Math.round((new Date(b) - new Date(a)) / 86400000); }
 function touchStreak(){
@@ -1832,6 +1879,13 @@ function overallProgress(){
   DOMAINS.forEach(function(d){ d.nodes.forEach(function(n){ total++; if(state.completed[n.id]) done++; }); });
   return { done:done, total:total, pct: total ? Math.round(done/total*100) : 0 };
 }
+/* Same as overallProgress() but for an arbitrary section, regardless of which
+   section is currently active — used on the Home page, which shows all 3 at once. */
+function sectionOverallProgress(sec){
+  var total=0, done=0, st=sectionStates[sec.id];
+  sec.domains.forEach(function(d){ d.nodes.forEach(function(n){ total++; if(st.completed[n.id]) done++; }); });
+  return { done:done, total:total, pct: total ? Math.round(done/total*100) : 0 };
+}
 function isUnlocked(domain, idx){
   if(domain.status === 'preview') return true;
   if(idx === 0) return true;
@@ -1854,42 +1908,66 @@ function renderChrome(){
 
   var nav = document.getElementById('nav-list');
   var html = '';
-  html += '<button class="nav-item ' + (view.type==='dashboard'?'active':'') + '" data-nav="dashboard"><span class="dot"></span><span class="n-title">Dashboard</span></button>';
-  DOMAINS.forEach(function(d){
-    var p = domainProgress(d);
+  html += '<button class="nav-item ' + (view.type==='home'?'active':'') + '" data-nav="home"><span class="dot"></span><span class="n-title">Home</span></button>';
+  SECTIONS.forEach(function(sec){
+    var isActiveSection = view.type!=='home' && currentSectionId===sec.id;
     var cls = 'nav-item';
-    if(view.type!=='dashboard' && view.domainId===d.id) cls += ' active';
-    if(d.status==='live') cls += ' live';
-    if(p.pct===100) cls += ' done';
-    html += '<button class="'+cls+'" data-nav="domain" data-domain="'+d.id+'">'+
-      '<span class="dot"></span><span class="n-title">'+d.code+' &middot; '+d.name+'</span><span class="n-pct">'+p.pct+'%</span></button>'+
-      '<div class="nav-mini-bar"><i style="width:'+p.pct+'%"></i></div>';
+    if(isActiveSection && view.type==='dashboard') cls += ' active';
+    if(sec.status==='live') cls += ' live';
+    html += '<button class="'+cls+'" data-nav="section" data-section="'+sec.id+'">'+
+      '<span class="dot"></span><span class="n-title">'+sec.name+'</span>'+
+      (sec.status==='coming-soon' ? '<span class="n-pct">Soon</span>' : '')+'</button>';
+    if(isActiveSection && sec.domains.length){
+      sec.domains.forEach(function(d){
+        var p = domainProgress(d);
+        var dcls = 'nav-item nav-sub';
+        if((view.type==='domain'||view.type==='lesson'||view.type==='lab') && view.domainId===d.id) dcls += ' active';
+        if(d.status==='live') dcls += ' live';
+        if(p.pct===100) dcls += ' done';
+        html += '<button class="'+dcls+'" data-nav="domain" data-domain="'+d.id+'">'+
+          '<span class="dot"></span><span class="n-title">'+d.code+' &middot; '+d.name+'</span><span class="n-pct">'+p.pct+'%</span></button>'+
+          '<div class="nav-mini-bar"><i style="width:'+p.pct+'%"></i></div>';
+      });
+      var examCls = 'nav-item nav-sub exam-nav';
+      if(view.type==='exam') examCls += ' active';
+      if(state.examPassed) examCls += ' done';
+      html += '<button class="'+examCls+'" data-nav="exam"><span class="dot"></span><span class="n-title">&#127942; Final Exam</span>'+
+        (state.examPassed ? '<span class="n-pct">PASS</span>' : '')+'</button>';
+    }
   });
-  var examCls = 'nav-item exam-nav';
-  if(view.type==='exam') examCls += ' active';
-  if(state.examPassed) examCls += ' done';
-  html += '<button class="'+examCls+'" data-nav="exam"><span class="dot"></span><span class="n-title">&#127942; Final Exam</span>'+
-    (state.examPassed ? '<span class="n-pct">PASS</span>' : '')+'</button>';
   nav.innerHTML = html;
   nav.querySelectorAll('[data-nav]').forEach(function(btn){
     btn.addEventListener('click', function(){
-      if(btn.dataset.nav==='dashboard') go({type:'dashboard'});
-      else if(btn.dataset.nav==='exam') go({type:'exam'});
-      else go({type:'domain', domainId:btn.dataset.domain});
+      if(btn.dataset.nav==='home') go({type:'home'});
+      else if(btn.dataset.nav==='section') go({type:'dashboard', sectionId:btn.dataset.section});
+      else if(btn.dataset.nav==='exam') go({type:'exam', sectionId:currentSectionId});
+      else go({type:'domain', domainId:btn.dataset.domain, sectionId:currentSectionId});
     });
   });
 
   var crumbEl = document.getElementById('crumb');
-  if(view.type==='dashboard') crumbEl.innerHTML = '<b>Dashboard</b>';
-  else if(view.type==='domain'){ var d=domainById(view.domainId); crumbEl.innerHTML = 'Dashboard / <b>'+d.name+'</b>'; }
-  else if(view.type==='lesson' || view.type==='lab'){ var d2=domainById(view.domainId); crumbEl.innerHTML = 'Dashboard / '+d2.name+' / <b>'+view.title+'</b>'; }
-  else if(view.type==='exam'){ crumbEl.innerHTML = 'Dashboard / <b>Final Exam</b>'; }
+  if(view.type==='home') crumbEl.innerHTML = '<b>Home</b>';
+  else {
+    var secLabel = sectionById(currentSectionId).name;
+    if(view.type==='dashboard') crumbEl.innerHTML = 'Home / <b>'+secLabel+'</b>';
+    else if(view.type==='domain'){ var d=domainById(view.domainId); crumbEl.innerHTML = 'Home / '+secLabel+' / <b>'+d.name+'</b>'; }
+    else if(view.type==='lesson' || view.type==='lab'){ var d2=domainById(view.domainId); crumbEl.innerHTML = 'Home / '+secLabel+' / '+d2.name+' / <b>'+view.title+'</b>'; }
+    else if(view.type==='exam'){ crumbEl.innerHTML = 'Home / '+secLabel+' / <b>Final Exam</b>'; }
+  }
 }
 
 /* ============================================================
    RENDER: DASHBOARD
 ============================================================ */
 function renderDashboard(){
+  var sec = sectionById(currentSectionId);
+  if(!DOMAINS.length){
+    document.getElementById('view').innerHTML =
+      '<div class="hero"><div><h1>'+sec.name+'</h1><p>'+sec.tagline+' This track hasn\'t been built out yet — check back soon.</p></div></div>'+
+      '<div class="overview-box"><h3 class="uc">Coming soon</h3><p style="margin-bottom:0">There\'s no content here yet. <a href="#" id="home-link">Head back to Home</a> and keep training in Cybersecurity in the meantime.</p></div>';
+    document.getElementById('home-link').addEventListener('click', function(e){ e.preventDefault(); go({type:'home'}); });
+    return;
+  }
   var op = overallProgress();
   var circumference = 2*Math.PI*38;
   var offset = circumference - (op.pct/100)*circumference;
@@ -1926,12 +2004,41 @@ function renderDashboard(){
 
   document.getElementById('view').innerHTML = html;
   document.querySelectorAll('[data-open]').forEach(function(el){
-    el.addEventListener('click', function(){ go({type:'domain', domainId: el.dataset.open}); });
+    el.addEventListener('click', function(){ go({type:'domain', domainId: el.dataset.open, sectionId: currentSectionId}); });
   });
   var examCardEl = document.getElementById('exam-card');
   if(examCardEl){
-    examCardEl.addEventListener('click', function(){ if(examUnlocked) go({type:'exam'}); });
+    examCardEl.addEventListener('click', function(){ if(examUnlocked) go({type:'exam', sectionId: currentSectionId}); });
   }
+}
+
+/* ============================================================
+   RENDER: HOME (top-level, lists all sections)
+============================================================ */
+function renderHome(){
+  var html = '<div class="hero"><div><h1>Welcome back, Analyst.</h1><p>Pick a track to train in. XP, rank, and streak are tracked separately for each one.</p></div></div>';
+  html += '<div class="path">';
+  SECTIONS.forEach(function(sec){
+    var st = sectionStates[sec.id];
+    var rank = getRank(st.xp);
+    var op = sectionOverallProgress(sec);
+    var hasContent = sec.domains.length > 0;
+    var stateCls = sec.status==='coming-soon' ? 'preview' : (hasContent && op.pct===100 ? 'complete' : 'live');
+    html += '<div class="domain-node '+stateCls+'" data-open-section="'+sec.id+'">'+
+      '<div class="node-marker">'+ (hasContent && op.pct===100 ? '&#10003;' : sec.name.charAt(0)) +'</div>'+
+      '<div class="domain-card"><div class="domain-card-top">'+
+        '<div><div class="domain-title">'+sec.name+'</div><p class="domain-tagline">'+sec.tagline+'</p></div>'+
+        '<div style="display:flex;gap:6px;flex:none">'+
+        (sec.status==='coming-soon' ? '<span class="badge preview">Coming soon</span>' : '<span class="badge weight">'+rank.name+' &middot; '+st.xp+' XP</span>')+
+        '</div></div>'+
+        (hasContent ? '<div class="domain-progress-bar"><i style="width:'+op.pct+'%"></i></div><div style="font-family:var(--font-mono);font-size:.7rem;color:var(--text-faint);margin-top:6px">'+op.done+' / '+op.total+' modules complete</div>' : '')+
+      '</div></div>';
+  });
+  html += '</div>';
+  document.getElementById('view').innerHTML = html;
+  document.querySelectorAll('[data-open-section]').forEach(function(el){
+    el.addEventListener('click', function(){ go({type:'dashboard', sectionId: el.dataset.openSection}); });
+  });
 }
 
 /* ============================================================
@@ -1965,13 +2072,13 @@ function renderDomain(domainId){
   html += '</div>';
 
   document.getElementById('view').innerHTML = html;
-  document.getElementById('back-btn').addEventListener('click', function(){ go({type:'dashboard'}); });
+  document.getElementById('back-btn').addEventListener('click', function(){ go({type:'dashboard', sectionId:currentSectionId}); });
   document.querySelectorAll('.node-card').forEach(function(card){
     card.addEventListener('click', function(){
       if(card.dataset.locked === 'true') return;
       var n = nodeById(d, card.dataset.node);
-      if(n.type==='lesson') go({type:'lesson', domainId:d.id, nodeId:n.id, title:n.title});
-      else go({type:'lab', domainId:d.id, nodeId:n.id, title:n.title});
+      if(n.type==='lesson') go({type:'lesson', domainId:d.id, nodeId:n.id, title:n.title, sectionId:currentSectionId});
+      else go({type:'lab', domainId:d.id, nodeId:n.id, title:n.title, sectionId:currentSectionId});
     });
   });
 }
@@ -1990,7 +2097,7 @@ function renderLesson(domainId, nodeId){
   html += '<div class="lesson-cta"><h3 style="font-size:1rem">Knowledge check</h3><p style="color:var(--text-dim);font-size:.85rem">Score 70% or higher to complete this module and unlock the next.</p><div id="quiz-mount"></div></div>';
 
   document.getElementById('view').innerHTML = html;
-  document.getElementById('back-btn').addEventListener('click', function(){ go({type:'domain', domainId:d.id}); });
+  document.getElementById('back-btn').addEventListener('click', function(){ go({type:'domain', domainId:d.id, sectionId:currentSectionId}); });
   mountQuiz(document.getElementById('quiz-mount'), quiz, n, d);
 }
 
@@ -2093,7 +2200,7 @@ function renderLab(domainId, nodeId){
   html += '</div>';
 
   document.getElementById('view').innerHTML = html;
-  document.getElementById('back-btn').addEventListener('click', function(){ go({type:'domain', domainId:d.id}); });
+  document.getElementById('back-btn').addEventListener('click', function(){ go({type:'domain', domainId:d.id, sectionId:currentSectionId}); });
 
   var termBody = document.getElementById('term-body');
   function printLine(text, cls){
@@ -2232,7 +2339,7 @@ function renderExam(){
   html += '<div class="lesson-head"><div><h1>CS0-003 Final Exam</h1></div><span class="badge weight">'+EXAM_XP+' XP</span></div>';
   html += '<div id="exam-mount"></div>';
   document.getElementById('view').innerHTML = html;
-  document.getElementById('back-btn').addEventListener('click', function(){ go({type:'dashboard'}); });
+  document.getElementById('back-btn').addEventListener('click', function(){ go({type:'dashboard', sectionId:currentSectionId}); });
   mountExam(document.getElementById('exam-mount'));
 }
 
@@ -2344,7 +2451,8 @@ function mountExam(mount){
 ============================================================ */
 function render(){
   renderChrome();
-  if(view.type==='dashboard') renderDashboard();
+  if(view.type==='home') renderHome();
+  else if(view.type==='dashboard') renderDashboard();
   else if(view.type==='domain') renderDomain(view.domainId);
   else if(view.type==='lesson') renderLesson(view.domainId, view.nodeId);
   else if(view.type==='lab') renderLab(view.domainId, view.nodeId);
@@ -2355,7 +2463,7 @@ function render(){
    EXPORT / IMPORT / RESET
 ============================================================ */
 document.getElementById('btn-export').addEventListener('click', function(){
-  var data = JSON.stringify(state, null, 2);
+  var data = JSON.stringify(sectionStates, null, 2);
   var filename = 'cyber-range-progress.json';
   if(window.claude && window.claude.downloads){
     window.claude.downloads.save({ filename:filename, data:data }).then(function(){
@@ -2387,9 +2495,8 @@ document.getElementById('file-import').addEventListener('change', function(e){
   reader.onload = function(){
     try{
       var parsed = JSON.parse(reader.result);
-      var d = defaultState();
-      for(var k in d){ if(parsed[k] === undefined) parsed[k] = d[k]; }
-      state = parsed;
+      sectionStates = normalizeSectionStates(parsed);
+      state = sectionStates[currentSectionId];
       saveState();
       render();
       showToast('Imported', 'Progress restored');
@@ -2402,12 +2509,14 @@ document.getElementById('file-import').addEventListener('change', function(e){
 });
 
 document.getElementById('btn-reset').addEventListener('click', function(){
-  if(!confirm('Reset all progress? This cannot be undone unless you exported a backup.')) return;
-  state = defaultState();
+  var secName = sectionById(currentSectionId).name;
+  if(!confirm('Reset progress for '+secName+'? This cannot be undone unless you exported a backup.')) return;
+  sectionStates[currentSectionId] = defaultState();
+  state = sectionStates[currentSectionId];
   touchStreak();
   saveState();
-  go({type:'dashboard'});
-  showToast('Progress reset', '');
+  go({type:'dashboard', sectionId:currentSectionId});
+  showToast('Progress reset', secName);
 });
 
 /* ============================================================
