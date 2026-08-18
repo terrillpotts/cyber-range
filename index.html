@@ -1,4 +1,4 @@
-<title>The Cyber Range — SOC Training Ground</title>
+<title>The Proving Grounds — SOC Training Ground</title>
 <style>
 /* ---------- tokens ---------- */
 :root{
@@ -256,7 +256,7 @@ button{font-family:inherit;}
 .term-body{ height:420px; overflow-y:auto; padding:12px 14px; font-family:var(--font-mono); font-size:.8rem; color:#c9d4de; }
 .term-body .ln{ white-space:pre-wrap; word-break:break-word; margin-bottom:2px; }
 .term-body .ln.cmd{ color:#f2a93b; }
-.term-body .ln.cmd::before{ content:"analyst@cyber-range:~$ "; color:#4fb0c9; }
+.term-body .ln.cmd::before{ content:"analyst@proving-grounds:~$ "; color:#4fb0c9; }
 .term-body .ln.err{ color:#f0485a; }
 .term-body .ln.ok{ color:#3ee08a; }
 .term-body .ln.sys{ color:#5c6b7d; }
@@ -277,7 +277,7 @@ button{font-family:inherit;}
 <div class="app-shell">
   <aside class="sidebar">
     <div>
-      <div class="brand"><span class="path">THE </span><span class="name">CYBER RANGE</span><span class="cursor"></span></div>
+      <div class="brand"><span class="path">THE </span><span class="name">PROVING GROUNDS</span><span class="cursor"></span></div>
       <div class="tagline">Cybersecurity · Cloud · Networking</div>
     </div>
     <nav class="nav" id="nav-list"></nav>
@@ -2193,9 +2193,9 @@ function renderLab(domainId, nodeId){
     '<button class="btn btn-primary btn-block" id="obj-submit" style="margin-top:8px">Submit answer</button>'+
     '<button class="btn btn-block" id="obj-hint-btn" style="margin-top:6px">Hint</button></div>';
 
-  html += '<div class="terminal"><div class="term-head"><span class="term-dot" style="background:#f0485a"></span><span class="term-dot" style="background:#f2a93b"></span><span class="term-dot" style="background:#3ee08a"></span><span class="term-title">analyst@cyber-range:~'+'</span></div>'+
+  html += '<div class="terminal"><div class="term-head"><span class="term-dot" style="background:#f0485a"></span><span class="term-dot" style="background:#f2a93b"></span><span class="term-dot" style="background:#3ee08a"></span><span class="term-title">analyst@proving-grounds:~'+'</span></div>'+
     '<div class="term-body" id="term-body"></div>'+
-    '<div class="term-input-row"><span class="term-prompt">analyst@cyber-range:~$</span><input class="term-input" id="term-input" autocomplete="off" spellcheck="false"></div></div>';
+    '<div class="term-input-row"><span class="term-prompt">analyst@proving-grounds:~$</span><input class="term-input" id="term-input" autocomplete="off" spellcheck="false"></div></div>';
 
   html += '</div>';
 
@@ -2464,7 +2464,7 @@ function render(){
 ============================================================ */
 document.getElementById('btn-export').addEventListener('click', function(){
   var data = JSON.stringify(sectionStates, null, 2);
-  var filename = 'cyber-range-progress.json';
+  var filename = 'proving-grounds-progress.json';
   if(window.claude && window.claude.downloads){
     window.claude.downloads.save({ filename:filename, data:data }).then(function(){
       showToast('Saved', filename);

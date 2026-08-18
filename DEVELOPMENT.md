@@ -4,9 +4,9 @@ Maintainer notes for editing this project. See `README.md` for the public-facing
 
 **Two published copies exist and both need updating on changes:**
 - Claude Artifact: https://claude.ai/code/artifact/3831172f-1950-4713-80f9-6eb58ad0c3d0 (republish via the Artifact tool, passing that `url` so it updates in place instead of minting a new one)
-- GitHub Pages: https://terrillpotts.github.io/cyber-range/ (served from `index.html` on the `main` branch of this repo — commit/push to update)
+- GitHub Pages: https://terrillpotts.github.io/proving-grounds/ (served from `index.html` on the `main` branch of the `terrillpotts/proving-grounds` repo — commit/push to update)
 
-**Source of truth for editing:** `cysa-range.html` in this folder is the durable copy (any Claude session's scratchpad copy is temporary and disappears when that session ends). The version pushed to GitHub as `index.html` should always match it.
+**Source of truth for editing:** `proving-grounds.html` in this folder is the durable copy (any Claude session's scratchpad copy is temporary and disappears when that session ends). The version pushed to GitHub as `index.html` should always match it. (Renamed from `cysa-range.html` on 2026-08-18 when the platform was rebranded from "The Cyber Range" to "The Proving Grounds" — the repo was renamed from `cyber-range` to `proving-grounds` at the same time.)
 
 ### Objectives alignment (added 2026-08-13)
 
@@ -33,7 +33,7 @@ To add real content to Cloud or Networking later: build a `DOMAINS_CLOUD` (or `_
 
 ## How to keep developing this
 
-1. Edit `cysa-range.html` directly (plain HTML/CSS/JS, no build step).
+1. Edit `proving-grounds.html` directly (plain HTML/CSS/JS, no build step).
 2. Test locally before publishing — **do not trust bracket-balance checks alone**, click through it in a real browser. A local static server works well:
    ```powershell
    # from this folder
@@ -43,7 +43,7 @@ To add real content to Cloud or Networking later: build a `DOMAINS_CLOUD` (or `_
    while ($true) {
      $context = $listener.GetContext()
      $path = $context.Request.Url.LocalPath.TrimStart('/')
-     if ([string]::IsNullOrEmpty($path)) { $path = "cysa-range.html" }
+     if ([string]::IsNullOrEmpty($path)) { $path = "proving-grounds.html" }
      $full = Join-Path (Get-Location) $path
      if (Test-Path $full) {
        $bytes = [System.IO.File]::ReadAllBytes($full)
@@ -53,10 +53,10 @@ To add real content to Cloud or Networking later: build a `DOMAINS_CLOUD` (or `_
      $context.Response.OutputStream.Close()
    }
    ```
-   Then open `http://localhost:8791/cysa-range.html`. (`file://` also works in a normal browser, just not inside Claude Code's browser-automation tool, which blocks local file navigation.)
+   Then open `http://localhost:8791/proving-grounds.html`. (`file://` also works in a normal browser, just not inside Claude Code's browser-automation tool, which blocks local file navigation.)
 3. Republish to the *same* Claude artifact URL by passing `url: "https://claude.ai/code/artifact/3831172f-1950-4713-80f9-6eb58ad0c3d0"` to the Artifact tool — otherwise a new conversation mints a brand-new URL.
-4. Push the same updated file to GitHub as `index.html` on `main` (repo: `terrillpotts/cyber-range`) so the GitHub Pages copy matches.
-5. After any content edit, re-copy this file back into the durable project folder (`C:\projects\cyber projects\cyber-range\cysa-range.html`) — the scratchpad copy a session works from is temporary.
+4. Push the same updated file to GitHub as `index.html` on `main` (repo: `terrillpotts/proving-grounds`) so the GitHub Pages copy matches.
+5. After any content edit, re-copy this file back into the durable project folder (`C:\projects\cyber projects\proving-grounds\proving-grounds.html`) — the scratchpad copy a session works from is temporary.
 
 ## Known gotchas (found via testing, already fixed — don't reintroduce)
 

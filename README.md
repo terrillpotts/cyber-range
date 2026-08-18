@@ -1,8 +1,8 @@
-# The Cyber Range — Self-Paced Security Training
+# The Proving Grounds — Self-Paced Security Training
 
-**[Launch The Cyber Range →](https://terrillpotts.github.io/cyber-range/)**
+**[Launch The Proving Grounds →](https://terrillpotts.github.io/proving-grounds/)**
 
-![The Cyber Range dashboard](screenshot.jpg)
+![The Proving Grounds dashboard](screenshot.jpg)
 
 An interactive, HTB/THM-style training platform organized into three independently-tracked topic areas: **Cybersecurity**, **Cloud**, and **Networking**. XP, rank, and streak are tracked separately per track. Built as a single self-contained HTML file — no backend, no build step, no dependencies.
 
@@ -21,7 +21,7 @@ An interactive, HTB/THM-style training platform organized into three independent
 
 ## Try it
 
-Open **[terrillpotts.github.io/cyber-range](https://terrillpotts.github.io/cyber-range/)** — progress auto-saves to your browser's local storage. Use the Export/Import buttons in the sidebar to carry progress between devices (there's no server-side account system, so this is manual).
+Open **[terrillpotts.github.io/proving-grounds](https://terrillpotts.github.io/proving-grounds/)** — progress auto-saves to your browser's local storage. Use the Export/Import buttons in the sidebar to carry progress between devices (there's no server-side account system, so this is manual).
 
 ## Architecture
 
