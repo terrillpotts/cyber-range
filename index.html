@@ -79,7 +79,9 @@ button{font-family:inherit;}
 .nav-item .n-title{ flex:1; }
 .nav-item .n-pct{ font-family:var(--font-mono); font-size:.7rem; color:var(--text-faint); }
 .nav-item.nav-sub{ margin-left:14px; width:calc(100% - 14px); }
+.nav-item.nav-sub2{ margin-left:26px; width:calc(100% - 26px); }
 .nav-mini-bar{ height:3px; border-radius:2px; background:var(--surface-3); margin:2px 10px 6px; overflow:hidden; }
+.nav-mini-bar.sub2{ margin-left:22px; }
 .nav-mini-bar > i{ display:block; height:100%; background:var(--accent-cool); }
 
 .sidebar-spacer{ flex:1; }
@@ -954,6 +956,160 @@ var QUIZZES = {
       explain:"Alerts proactively fire when a rule's condition is met against monitored metrics or logs, and can trigger notifications or automated actions without a human watching a dashboard." },
     { q:"What does Azure Monitor Application Insights specifically add on top of general Azure Monitor?", opts:["Nothing — it's identical to base Azure Monitor","Application Performance Management (APM) — deep visibility into a specific application's requests, dependencies, exceptions, and performance, not just infrastructure-level metrics","It only monitors network hardware","It replaces the need for Log Analytics"], correct:1,
       explain:"Application Insights is Azure Monitor's APM feature, instrumenting application code itself to reveal request rates, response times, failure rates, dependency calls, and exceptions at the application layer." }
+  ],
+  awsValueProp: [
+    { q:"What is the AWS Cloud, most fundamentally?", opts:["A single physical data center in Seattle","An on-demand delivery platform for IT resources (compute, storage, databases, and more) over the internet, with pay-as-you-go pricing","A proprietary programming language for building web apps","A backup-only service for on-premises servers"], correct:1,
+      explain:"AWS delivers on-demand IT resources over the internet with usage-based billing — the same core cloud computing definition, just AWS's specific implementation of it." },
+    { q:"Which of these is one of the six core advantages of cloud computing AWS describes?", opts:["Trading variable expense for a large fixed capital expense","Trading capital expense for variable expense — pay only for the compute resources you actually consume","Guaranteeing zero operating cost forever","Eliminating the need for any billing at all"], correct:1,
+      explain:"Trading capital expense (CapEx) for variable expense (OpEx) is the first of AWS's six advantages — you pay for computing resources as you consume them rather than investing heavily up front." },
+    { q:"What does \"economies of scale\" mean in the context of AWS pricing?", opts:["Prices increase as AWS grows larger, to fund expansion","Because AWS aggregates usage from hundreds of thousands of customers, it achieves higher economies of scale than any single company could alone, translating into lower pay-as-you-go prices","It refers only to enterprise customers with large contracts","It means every customer pays an identical flat fee regardless of usage"], correct:1,
+      explain:"Aggregating massive demand lets AWS negotiate better costs and pass some of those savings on to all customers via lower prices, not just its largest ones." },
+    { q:"How does the cloud let a company \"stop guessing capacity\"?", opts:["By forcing a company to permanently over-provision hardware","By letting a company access as much or as little capacity as needed, scaling up or down automatically as demand changes, instead of guessing infrastructure needs in advance","By requiring a multi-year hardware forecast before deployment","Capacity planning is not affected by the cloud at all"], correct:1,
+      explain:"On-premises capacity planning means guessing future demand and living with the consequences of guessing wrong; cloud elasticity removes that guesswork by scaling to match actual demand." },
+    { q:"What does \"go global in minutes\" refer to as a cloud benefit?", opts:["The ability to deploy applications into multiple AWS Regions around the world within minutes, to be closer to end users and reduce latency","A marketing slogan with no technical meaning","The requirement that every AWS account operates in every region simultaneously","A reference to how fast AWS support tickets are resolved worldwide"], correct:0,
+      explain:"Because AWS's global infrastructure already exists, expanding an application into a new Region to serve users closer to them is a deployment decision, not a years-long datacenter build-out." },
+    { q:"A company moving from on-premises servers to AWS eliminates ongoing costs for racking, stacking, and powering physical servers. This illustrates which cloud advantage?", opts:["Increase speed and agility","Stop spending money running and maintaining data centers","Variable pricing only applies to storage","Go global in minutes"], correct:1,
+      explain:"Removing the undifferentiated heavy lifting of physical datacenter operations is exactly the 'stop spending money on data centers' advantage — that effort shifts to AWS instead." }
+  ],
+  awsWellArchitected: [
+    { q:"What is the purpose of the AWS Well-Architected Framework?", opts:["It is a billing discount program","It provides a consistent set of best-practice pillars for evaluating and improving cloud architectures","It is a certification exam separate from CLF-C02","It only applies to government cloud deployments"], correct:1,
+      explain:"The Well-Architected Framework gives a structured way to evaluate an architecture against best practices across a defined set of pillars, regardless of workload type." },
+    { q:"Which Well-Architected pillar focuses on the ability to run and monitor systems to deliver business value, and continually improve processes?", opts:["Security","Operational excellence","Cost optimization","Sustainability"], correct:1,
+      explain:"Operational excellence is about running and monitoring systems effectively and continually improving processes — not a synonym for any of the other pillars." },
+    { q:"Which Well-Architected pillar focuses on protecting data, systems, and assets through risk assessment and mitigation strategies?", opts:["Performance efficiency","Reliability","Security","Sustainability"], correct:2,
+      explain:"Security is specifically about protecting information, systems, and assets while delivering business value through risk assessments and mitigation strategies." },
+    { q:"Which Well-Architected pillar focuses on a workload's ability to recover from infrastructure or service disruptions and dynamically acquire computing resources to meet demand?", opts:["Reliability","Cost optimization","Operational excellence","Performance efficiency"], correct:0,
+      explain:"Reliability covers recovering from disruptions and dynamically acquiring resources to meet demand, and mitigating issues like misconfigurations or transient network problems." },
+    { q:"Which Well-Architected pillar focuses on using computing resources efficiently to meet requirements and maintaining that efficiency as demand and technology evolve?", opts:["Security","Performance efficiency","Sustainability","Reliability"], correct:1,
+      explain:"Performance efficiency is about the efficient use of computing resources, and keeping that efficiency as demand fluctuates and technology evolves over time." },
+    { q:"Which Well-Architected pillar was added specifically to address minimizing the environmental impact of running cloud workloads?", opts:["Cost optimization","Sustainability","Reliability","Operational excellence"], correct:1,
+      explain:"Sustainability focuses on minimizing the environmental impact of running cloud workloads — the newest of the six pillars." }
+  ],
+  awsSharedResponsibility: [
+    { q:"Under the AWS shared responsibility model, what is AWS always responsible for, regardless of service type?", opts:["The customer's application-level access controls","Security OF the cloud — the physical infrastructure, hardware, and managed service software","The customer's own data classification decisions","Configuring the customer's own IAM policies"], correct:1,
+      explain:"AWS is always responsible for 'security of the cloud' — the global infrastructure, hardware, software, networking, and facilities running AWS services." },
+    { q:"Under the AWS shared responsibility model, what is the customer always responsible for?", opts:["The physical security of AWS data centers","Security IN the cloud — customer data, identity and access management configuration, and (depending on the service) guest OS/network/firewall configuration","Patching the underlying hypervisor","Maintaining AWS's global network backbone"], correct:1,
+      explain:"The customer's slice, 'security in the cloud,' always includes their own data and IAM configuration, and grows to include more (like guest OS patching) for lower-level services." },
+    { q:"For an EC2 instance (infrastructure-level service), which of the following is the CUSTOMER's responsibility?", opts:["Physical security of the host hardware","Patching the guest operating system running on the instance","Decommissioning old physical disks","Maintaining the power and cooling for the facility"], correct:1,
+      explain:"With EC2, AWS manages the physical host and hypervisor, but the customer owns everything from the guest OS upward — including patching it." },
+    { q:"For a fully managed service like Amazon S3, how does the responsibility split shift compared to EC2?", opts:["The customer takes on more infrastructure responsibility than with EC2","AWS takes on more of the responsibility — including operating system and platform management — leaving the customer responsible mainly for data, access policies, and client-side configuration","There is no shared responsibility model for managed services","The customer must still patch the underlying OS for S3"], correct:1,
+      explain:"Managed services like S3 shift more of the stack onto AWS — there's no guest OS for the customer to patch — leaving the customer focused on data, access control, and encryption configuration." },
+    { q:"Where would AWS's compliance and security certifications documentation (e.g., audit reports) most directly be found?", opts:["AWS Artifact","Amazon S3 console","AWS Budgets","Amazon EC2 console"], correct:0,
+      explain:"AWS Artifact is the self-service portal for AWS's compliance reports and select agreements, giving customers on-demand access to audit and certification documentation." },
+    { q:"A company suffers a data breach because an S3 bucket was left publicly accessible due to a misconfigured bucket policy. Under the shared responsibility model, whose responsibility was this?", opts:["AWS's, since it operates S3","The customer's, since bucket access policy configuration falls under security IN the cloud","Neither party is responsible for cloud misconfigurations","AWS Support's, since they should have caught it automatically"], correct:1,
+      explain:"Bucket policy configuration is customer-controlled access management — squarely inside 'security in the cloud,' regardless of how well AWS secures the underlying S3 infrastructure itself." }
+  ],
+  awsIAM: [
+    { q:"What is the AWS account root user, and why is it recommended NOT to use it for daily tasks?", opts:["The root user is a temporary test account with no real permissions","The root user is created automatically when an AWS account is opened and has unrestricted access to all resources and billing — best practice is to secure it with MFA and use IAM users/roles for daily work instead","The root user only has read-only access","The root user is required for every single API call"], correct:1,
+      explain:"The root user's unrestricted power makes it a high-value target and a dangerous daily driver — securing it (MFA, minimal use) and delegating day-to-day work to IAM identities is standard best practice." },
+    { q:"What is the difference between an IAM user and an IAM role?", opts:["They are identical concepts with different names","An IAM user represents a long-term identity (person or application) with permanent credentials; an IAM role is an identity that can be temporarily assumed, granting temporary credentials without permanent long-term keys","IAM roles can only be assigned to the root user","IAM users cannot be assigned permissions of any kind"], correct:1,
+      explain:"Users carry standing, long-term credentials; roles are assumed temporarily (by a user, application, or AWS service) and issue short-lived credentials, reducing the risk of long-lived secrets leaking." },
+    { q:"What is the principle of least privilege in IAM policy design?", opts:["Granting every user full administrator access by default for convenience","Granting only the minimum permissions necessary for a user or role to perform its required tasks, nothing more","Applying the same policy to every user, group, and role uniformly","Removing all permissions checks to speed up development"], correct:1,
+      explain:"Least privilege limits the blast radius of a compromised credential or a mistake by ensuring identities only ever hold the permissions they actually need." },
+    { q:"What is the purpose of an IAM group?", opts:["A group is a billing construct with no access-control function","A group is a collection of IAM users that lets administrators attach a shared set of permissions policies to many users at once, instead of managing each individually","A group replaces the need for IAM policies entirely","A group can only ever contain a single user"], correct:1,
+      explain:"Groups let administrators manage permissions at scale — attach a policy once to a group instead of repeating that work for every individual user in it." },
+    { q:"What does enabling multi-factor authentication (MFA) on the root user and IAM users add?", opts:["It removes the need for a password entirely","It requires an additional verification factor beyond the password at sign-in, so a compromised password alone isn't enough to access the account","MFA is only available for the root user, not IAM users","MFA slows down billing calculations"], correct:1,
+      explain:"MFA adds a second, independent verification factor, so a leaked password alone doesn't grant full account access — recommended for the root user especially, given its unrestricted power." },
+    { q:"What format are IAM policies written in?", opts:["YAML","JSON documents that specify allowed or denied actions, resources, and conditions","Plain unstructured text","XML exclusively"], correct:1,
+      explain:"IAM policies are JSON documents describing which actions are allowed or denied, against which resources, optionally under specific conditions." }
+  ],
+  awsGovernanceSecurity: [
+    { q:"What is the purpose of AWS Organizations?", opts:["It is a billing calculator only","It lets a company centrally manage and govern multiple AWS accounts, including consolidated billing and applying service control policies (SCPs) across accounts","It replaces IAM entirely","It only works with a single AWS account"], correct:1,
+      explain:"Organizations is built for managing many AWS accounts together — centralized billing plus policy-based governance across the whole account structure." },
+    { q:"What is a Service Control Policy (SCP) used for within AWS Organizations?", opts:["Setting the maximum spending limit for an account automatically","Defining the maximum available permissions for accounts within an organization or organizational unit — a guardrail that even an account's own administrators cannot exceed","Encrypting data at rest","Configuring DNS routing"], correct:1,
+      explain:"SCPs set an outer boundary on what's possible in member accounts — even an account admin with full IAM permissions can't exceed what the SCP allows." },
+    { q:"What is the primary purpose of AWS Key Management Service (KMS)?", opts:["Managing physical server room key-card access","Creating and controlling encryption keys used to encrypt data across AWS services","Managing IAM user passwords exclusively","Load balancing incoming traffic"], correct:1,
+      explain:"KMS centralizes the creation, control, and lifecycle management of the cryptographic keys used to encrypt data in AWS services." },
+    { q:"What does AWS Shield protect against?", opts:["SQL injection specifically","Distributed Denial of Service (DDoS) attacks","Phishing emails","Insider threats exclusively"], correct:1,
+      explain:"Shield is AWS's managed DDoS protection service, safeguarding applications from distributed denial-of-service attacks." },
+    { q:"What does AWS WAF (Web Application Firewall) do?", opts:["Encrypts all traffic between regions automatically","Lets you monitor and control HTTP/HTTPS requests forwarded to protected web applications, filtering out malicious traffic patterns like SQL injection or cross-site scripting","Manages billing alerts","Provisions new EC2 instances automatically"], correct:1,
+      explain:"WAF inspects web requests against rules you define, blocking common web-layer attack patterns like SQL injection or XSS before they reach the application." },
+    { q:"Where can a customer find independent, third-party audit reports and compliance certifications for AWS services?", opts:["AWS Trusted Advisor","AWS Artifact","Amazon CloudWatch","AWS Budgets"], correct:1,
+      explain:"AWS Artifact is the dedicated self-service portal for exactly this — compliance reports and audit documentation." }
+  ],
+  awsGlobalInfra: [
+    { q:"What is an AWS Region?", opts:["A single physical data center building","A separate geographic area that contains multiple, isolated locations known as Availability Zones","A synonym for an Availability Zone","A billing category with no physical meaning"], correct:1,
+      explain:"A Region is a geographic area made up of multiple isolated Availability Zones — the top-level unit customers choose when deciding where to deploy." },
+    { q:"What is an AWS Availability Zone (AZ)?", opts:["One or more discrete data centers with redundant power, networking, and connectivity within a Region, isolated from failures in other AZs but connected via low-latency links","A single server rack","A synonym for a Region","A type of storage service"], correct:0,
+      explain:"AZs are physically separate, independently powered and networked facilities within a Region, close enough for low-latency connections but isolated enough to contain most failures." },
+    { q:"What is the purpose of AWS Edge Locations, used by services like Amazon CloudFront?", opts:["They host the primary compute for all EC2 instances","They are sites that cache content closer to end users to reduce latency for content delivery, separate from Regions/AZs","They exclusively store billing records","They replace the need for Availability Zones"], correct:1,
+      explain:"Edge Locations are a separate, much larger network of caching points used by CDN-style services to serve content from somewhere physically closer to the end user." },
+    { q:"Which factors should influence choosing which AWS Region to deploy a workload into?", opts:["Only which region has the lowest-numbered name","Latency to end users, compliance/data residency requirements, cost differences between regions, and available service/feature set in that region","AWS assigns a region automatically with no customer choice","Regions are functionally and legally identical everywhere, so it never matters"], correct:1,
+      explain:"Region choice is a real architecture decision — driven by where your users are, what data-residency law applies, pricing differences, and which services/features that Region actually offers." },
+    { q:"Why does AWS deploy resources across multiple Availability Zones within a Region for high availability?", opts:["To increase billing complexity intentionally","So that a failure in one AZ (power, networking, natural disaster) doesn't take down an application that has redundant resources running in another AZ","AZs have no relationship to fault tolerance","Multi-AZ deployment is only relevant for storage, never compute"], correct:1,
+      explain:"Spreading resources across AZs means one AZ's failure doesn't take the whole application down — the classic redundancy pattern for regional-level high availability." },
+    { q:"What is a key difference between Regions and Availability Zones for architecture decisions?", opts:["They are the same thing","Spreading across AZs protects against a datacenter-level failure within a Region; spreading across Regions protects against a much larger, region-wide disaster","AZs are always more expensive to use than Regions","Only one AZ can be used per Region"], correct:1,
+      explain:"AZ-level redundancy handles a single-facility failure; Region-level redundancy is the answer when the entire Region could become unavailable — two different scales of resilience." }
+  ],
+  awsDeployOps: [
+    { q:"What is the AWS Management Console?", opts:["A command-line-only interface","A web-based graphical interface for creating, configuring, and managing AWS resources","A physical hardware appliance","A billing-only dashboard with no resource management"], correct:1,
+      explain:"The Console is AWS's primary web-based GUI, covering the full breadth of AWS services for creation, configuration, and monitoring." },
+    { q:"What is the AWS Command Line Interface (CLI) used for?", opts:["It is a browser-based drag-and-drop tool only","It's a unified tool to manage AWS services from a terminal/command prompt via typed commands, enabling scripting and automation","It replaces the need for IAM entirely","It can only be used on Windows"], correct:1,
+      explain:"The CLI is a single tool for controlling many AWS services from the command line, making scripted/automated management possible across platforms." },
+    { q:"What is the purpose of AWS Software Development Kits (SDKs)?", opts:["They are only used for billing reports","They let developers interact with AWS services directly from their application code in languages like Python, Java, or JavaScript, instead of manually using the console or CLI","SDKs are a synonym for CloudFormation","SDKs only work with Amazon S3"], correct:1,
+      explain:"SDKs give applications native, in-code access to AWS services, so functionality can be built directly into software rather than driven manually." },
+    { q:"What is AWS CloudFormation used for?", opts:["Manually clicking through the console to create each resource one at a time","Defining and provisioning AWS infrastructure using declarative template files (infrastructure as code), so environments can be created consistently and repeatably","Monitoring network traffic exclusively","Managing employee payroll"], correct:1,
+      explain:"CloudFormation is AWS's native infrastructure-as-code service — templates declare the desired resources, and CloudFormation provisions them consistently every time." },
+    { q:"What is AWS Elastic Beanstalk designed to simplify?", opts:["Physical hardware procurement","Deploying and managing web applications without needing to manually provision and configure the underlying infrastructure (EC2, load balancing, scaling) yourself — upload code and Beanstalk handles the rest","Root user password resets","Encrypting data in S3"], correct:1,
+      explain:"Beanstalk is a Platform-as-a-Service layer over EC2/ELB/Auto Scaling — you hand over your application code and it manages the underlying infrastructure automatically." },
+    { q:"A team wants full control over provisioning AWS infrastructure via code that can be version-controlled and reused across environments, rather than manually clicking in the console every time. What should they use?", opts:["AWS CloudFormation (infrastructure as code)","Only the AWS Management Console","AWS Budgets","AWS Trusted Advisor"], correct:0,
+      explain:"CloudFormation templates are exactly the mechanism for reusable, version-controllable, repeatable infrastructure provisioning." }
+  ],
+  awsCompute: [
+    { q:"What is Amazon EC2?", opts:["A fully managed relational database service","A web service providing resizable virtual servers (instances) in the cloud, giving the customer control over the operating system and installed software","A content delivery network","A DNS routing service"], correct:1,
+      explain:"EC2 is AWS's core IaaS compute offering — resizable virtual servers where the customer manages the guest OS and everything above it." },
+    { q:"What is AWS Lambda?", opts:["A virtual machine service requiring manual server management","A serverless compute service that runs code in response to triggers/events, automatically managing the underlying compute and billing only for actual execution time","A physical networking appliance","A storage class for infrequently accessed data"], correct:1,
+      explain:"Lambda runs your code only when triggered, handling all underlying server management automatically, and bills based on actual execution time rather than reserved capacity." },
+    { q:"What is the key difference between EC2 and Lambda for a simple event-driven task, like resizing an uploaded image?", opts:["EC2 requires provisioning and running a server continuously (or managing scaling) even when idle, while Lambda runs the code only when triggered and requires no server management at all","They are functionally identical in every respect","Lambda cannot be triggered by events","EC2 is always cheaper for short, infrequent tasks"], correct:0,
+      explain:"For short, event-driven work, Lambda's no-server, pay-per-execution model avoids the overhead of keeping an EC2 instance running (or managing its scaling) just to wait for occasional triggers." },
+    { q:"What do Amazon ECS and Amazon EKS have in common?", opts:["They are both relational database services","They are both container orchestration services — ECS is AWS's own container orchestrator, EKS is AWS's managed Kubernetes service — used to run and scale containerized applications","They are both billing tools","They are both identity management services"], correct:1,
+      explain:"Both orchestrate containers at scale; ECS is AWS's proprietary orchestrator, while EKS runs the open-source Kubernetes standard as a managed service." },
+    { q:"What is AWS Fargate?", opts:["A serverless compute engine for containers that works with ECS and EKS, removing the need to provision or manage the underlying EC2 instances that would normally host the containers","A type of Amazon S3 storage class","A DNS management service","A relational database engine"], correct:0,
+      explain:"Fargate removes the EC2-management layer from container orchestration entirely — you define the container, Fargate runs it without you provisioning any underlying instances." },
+    { q:"A company wants to run a containerized application without managing any underlying EC2 servers at all, letting AWS handle the compute capacity for the containers automatically. What should they use?", opts:["EC2 with manually managed Auto Scaling only","AWS Fargate (with ECS or EKS)","AWS Budgets","Amazon Route 53"], correct:1,
+      explain:"Fargate is purpose-built for exactly this — serverless container compute, paired with either ECS or EKS for orchestration." }
+  ],
+  awsStorageDbNetwork: [
+    { q:"What is Amazon S3 (Simple Storage Service) designed for?", opts:["Block storage attached directly to a single EC2 instance","Scalable object storage for storing and retrieving virtually any amount of data — documents, images, backups, static website content — accessed over the web","A relational database engine","A virtual private network service"], correct:1,
+      explain:"S3 is AWS's flagship object storage service — durable, scalable storage for unstructured data, accessed via web-based APIs." },
+    { q:"What is the purpose of S3 storage classes (e.g., Standard, Infrequent Access, Glacier)?", opts:["They control which AWS Region the bucket lives in","They let customers balance storage cost against retrieval cost/speed based on how frequently the data is accessed — from frequently-accessed Standard down to archival Glacier tiers","They determine which IAM users can access the bucket","They are only relevant for EC2 instance storage, not S3"], correct:1,
+      explain:"Storage classes trade storage cost against access cost/latency, letting you match each object's actual access pattern to the most cost-effective tier." },
+    { q:"What is Amazon EBS (Elastic Block Store) used for?", opts:["Object storage accessible over HTTP","Persistent block-level storage volumes that attach to a single EC2 instance, functioning like a virtual hard disk","A managed relational database","A DNS resolution service"], correct:1,
+      explain:"EBS provides persistent, attachable block storage for EC2 — the virtual-disk equivalent of a physical hard drive, surviving independently of the instance's lifecycle." },
+    { q:"What is the difference between Amazon RDS and Amazon DynamoDB?", opts:["They are the identical service under two names","RDS is a managed relational (SQL) database service supporting engines like MySQL and PostgreSQL; DynamoDB is a fully managed NoSQL key-value/document database built for extreme scale and single-digit-millisecond latency","DynamoDB is a relational database and RDS is NoSQL","Neither service is managed by AWS"], correct:1,
+      explain:"RDS covers traditional relational engines with managed patching/backups; DynamoDB is a purpose-built NoSQL service for massive scale and very low, consistent latency." },
+    { q:"What is the purpose of Amazon VPC (Virtual Private Cloud)?", opts:["A physical firewall appliance","A logically isolated virtual network within AWS where you launch resources, with control over IP addressing, subnets, route tables, and gateways","A billing dashboard","A content delivery network"], correct:1,
+      explain:"VPC is the foundational networking layer — your own logically isolated slice of the AWS network, where you control addressing, segmentation, and routing." },
+    { q:"What do Amazon Route 53 and Amazon CloudFront each primarily provide?", opts:["Both are relational database services","Route 53 is a scalable DNS web service for domain registration and routing; CloudFront is a content delivery network (CDN) that caches content at edge locations closer to users to reduce latency","They are both identical load-balancing services","Route 53 is a CDN and CloudFront is a DNS service (reversed)"], correct:1,
+      explain:"Route 53 handles DNS resolution and domain registration/routing; CloudFront distributes and caches content at edge locations to speed up delivery to end users." }
+  ],
+  awsPricing: [
+    { q:"What is the AWS On-Demand pricing model?", opts:["Requires a mandatory 3-year upfront commitment","Pay for compute or database capacity by the hour or second with no long-term commitments or upfront payments — maximum flexibility, typically the highest per-unit rate","A free tier with no usage limits ever","A model exclusive to storage services"], correct:1,
+      explain:"On-Demand trades a higher per-unit rate for zero commitment — the most flexible option, best for unpredictable or short-term workloads." },
+    { q:"What is the tradeoff with AWS Reserved Instances / Savings Plans compared to On-Demand pricing?", opts:["They always cost more than On-Demand with no benefit","You commit to a consistent amount of usage (e.g., 1 or 3 years) in exchange for a significantly discounted rate compared to On-Demand pricing","They can only be used for storage, never compute","They eliminate the need for any AWS account"], correct:1,
+      explain:"Committing to predictable usage over a term earns a meaningful discount versus On-Demand — the classic flexibility-for-savings tradeoff." },
+    { q:"What are Amazon EC2 Spot Instances?", opts:["Reserved capacity guaranteed never to be interrupted","Spare/unused EC2 capacity offered at steep discounts compared to On-Demand pricing, which AWS can reclaim with short notice — best suited for flexible, interruption-tolerant workloads","A synonym for Reserved Instances","Only available for database workloads"], correct:1,
+      explain:"Spot trades the risk of interruption (AWS can reclaim the capacity) for the deepest possible discount — a fit for fault-tolerant, flexible workloads, not anything requiring guaranteed uptime." },
+    { q:"What is the AWS Free Tier?", opts:["A permanent, unlimited-usage free plan for enterprise customers","A program offering limited free usage of certain AWS services for a period (e.g., 12 months) or always-free limits, to let new customers try services at no cost within defined limits","A discount that applies automatically to Reserved Instances only","A free unlimited support plan"], correct:1,
+      explain:"The Free Tier lets new (and in some cases all) customers try services within defined usage limits at no cost, without offering unlimited free usage." },
+    { q:"Why might a startup with highly unpredictable, short-lived compute needs prefer On-Demand over Reserved Instances?", opts:["On-Demand is always more expensive regardless of usage pattern, so this makes no sense","On-Demand avoids locking into a 1-3 year usage commitment, which matters when future capacity needs aren't predictable enough to safely commit to a discount","Reserved Instances cannot be purchased by startups","On-Demand pricing requires no payment at all"], correct:1,
+      explain:"Reserved pricing only pays off if you can confidently predict and sustain that usage — for genuinely unpredictable needs, On-Demand's flexibility outweighs the discount you'd otherwise get." },
+    { q:"A company has a steady, predictable baseline workload running 24/7 for the next year. Which pricing model would most reduce their cost for that baseline?", opts:["On-Demand pricing exclusively","Reserved Instances / Savings Plans, committing to that predictable usage in exchange for a discount","Spot Instances only, since they are always the cheapest option regardless of interruption risk","There is no way to reduce cost for steady workloads"], correct:1,
+      explain:"A steady, predictable 24/7 baseline is exactly the usage pattern Reserved Instances/Savings Plans are designed to discount — committing to known usage in exchange for savings." }
+  ],
+  awsBillingSupport: [
+    { q:"What is AWS Cost Explorer used for?", opts:["Provisioning new EC2 instances","Visualizing, understanding, and analyzing your AWS costs and usage over time, including forecasting future spend","Managing IAM permissions","Encrypting data at rest"], correct:1,
+      explain:"Cost Explorer is the visualization and analysis tool for historical cost/usage trends and forward-looking spend forecasts." },
+    { q:"What is the purpose of AWS Budgets?", opts:["It automatically shuts down all resources once a threshold is hit with no customer configuration","It lets you set custom cost or usage thresholds and receive alerts when actual or forecasted spend exceeds them","It replaces the need for Cost Explorer entirely","It only tracks the number of support tickets opened"], correct:1,
+      explain:"Budgets is the alerting layer — define a threshold, get notified when actual or forecasted spend crosses it, before it becomes a surprise." },
+    { q:"What does AWS Organizations' consolidated billing feature provide?", opts:["A single bill for all accounts within an organization, combining usage across accounts and potentially unlocking volume pricing discounts","Separate, unrelated invoices for every linked account with no combined benefit","A feature exclusive to a single-account setup","Consolidated billing removes the ability to see per-account cost detail"], correct:0,
+      explain:"Consolidated billing combines usage across every linked account into one bill, which can unlock volume discounts while still preserving per-account cost visibility." },
+    { q:"What does the AWS Pricing Calculator let you do?", opts:["Retroactively change what you were already billed","Estimate the cost of AWS services before deploying them, by modeling a planned architecture's configuration and expected usage","Automatically negotiate a lower rate with AWS Support","Only estimate costs for a single specific service, Amazon S3"], correct:1,
+      explain:"The Pricing Calculator is a planning tool — model a proposed deployment's configuration and usage to get a cost estimate before anything is actually provisioned." },
+    { q:"What is the key difference between the AWS Basic, Developer, Business, and Enterprise Support plans?", opts:["They are identical in every respect regardless of name","They differ in response times, access to Trusted Advisor checks, and access to a Technical Account Manager (TAM) — higher tiers offer faster response times and more proactive guidance","Only the Basic plan includes any human support at all","Support plans have no effect on response time"], correct:1,
+      explain:"Higher support tiers add faster guaranteed response times, fuller Trusted Advisor check access, and eventually a dedicated Technical Account Manager for proactive guidance." },
+    { q:"What does AWS Trusted Advisor check for?", opts:["Only network latency between regions","Recommendations across cost optimization, performance, security, fault tolerance, and service limits, based on AWS best practices applied to your actual account","It only applies to Enterprise Support customers with no exceptions","It manages IAM policies directly on your behalf automatically"], correct:1,
+      explain:"Trusted Advisor inspects your actual account against AWS best practices across five categories — cost optimization, performance, security, fault tolerance, and service limits — and surfaces specific recommendations." }
   ]
 };
 
@@ -1662,6 +1818,186 @@ monitoringTools: {
     "<li><b>Azure Monitor alerts</b> — automated notifications or actions, proactively triggered when a defined condition is met against collected metrics or logs (e.g., CPU above 90% for five minutes), so issues surface without a human watching a dashboard.</li>" +
     "<li><b>Application Insights</b> — Azure Monitor's Application Performance Management (APM) feature, instrumenting application code itself to reveal request rates, response times, dependency calls, and exceptions at the application layer, not just infrastructure-level metrics.</li></ul>" +
     "<div class='callout'><span class='uc'>Exam note</span><p>Notice the layering across this whole domain: Policy and locks govern configuration, Cost Management governs spend, and Advisor/Service Health/Monitor together govern operational visibility — three different governance questions, three different tool families.</p></div>"
+},
+awsValueProp: {
+  title:"The AWS Cloud &amp; Its Value Proposition",
+  html:
+    "<p>Every AWS service and every exam question ultimately traces back to one question: why move to the cloud at all? This lesson covers what the AWS Cloud actually is and the economic case for using it.</p>" +
+    "<h3>What the AWS Cloud is</h3>" +
+    "<p>The AWS Cloud is Amazon's on-demand delivery platform for IT resources — compute, storage, databases, networking, and dozens of higher-level services — delivered over the internet with pay-as-you-go pricing. Instead of buying and operating physical servers, a customer rents exactly the capacity needed, when it's needed, from AWS's global infrastructure.</p>" +
+    "<h3>The six advantages of cloud computing</h3>" +
+    "<p>AWS frames the business case for cloud adoption around six concrete advantages:</p>" +
+    "<ul><li><b>Trade capital expense for variable expense</b> — instead of investing heavily in data centers before knowing how much you'll actually use, pay only for the compute you consume.</li>" +
+    "<li><b>Benefit from massive economies of scale</b> — AWS aggregates usage from hundreds of thousands of customers, achieving lower costs than any single company could negotiate alone, and passes some of that savings on through lower pay-as-you-go prices.</li>" +
+    "<li><b>Stop guessing capacity</b> — scale up or down automatically to match actual demand, instead of provisioning for a guess that's usually wrong in one direction or the other.</li>" +
+    "<li><b>Increase speed and agility</b> — new resources are a few clicks or an API call away, not a weeks-long procurement cycle.</li>" +
+    "<li><b>Stop spending money running and maintaining data centers</b> — the undifferentiated heavy lifting of racking, stacking, powering, and cooling physical servers shifts to AWS.</li>" +
+    "<li><b>Go global in minutes</b> — deploy an application into new AWS Regions around the world to get closer to end users and reduce latency, without building new physical infrastructure yourself.</li></ul>" +
+    "<div class='diagram-flow'>" +
+      "<div class='step'>CapEx<br><span style='color:var(--text-faint)'>buy hardware upfront</span></div><div class='arrow'>&#8594;</div>" +
+      "<div class='step'>OpEx<br><span style='color:var(--text-faint)'>pay for what you use</span></div><div class='arrow'>&#8594;</div>" +
+      "<div class='step'>Elasticity<br><span style='color:var(--text-faint)'>scale to match demand</span></div>" +
+    "</div>" +
+    "<div class='callout'><span class='uc'>Exam note</span><p>These six advantages show up constantly as the 'why' behind AWS scenario questions — a scenario describing a company avoiding a large upfront hardware purchase is testing the CapEx-to-OpEx advantage specifically, not cloud benefits in general.</p></div>"
+},
+awsWellArchitected: {
+  title:"The AWS Well-Architected Framework",
+  html:
+    "<p>Knowing individual AWS services is only half of cloud fluency — the other half is judging whether an architecture built from those services is actually well designed. The Well-Architected Framework gives a consistent vocabulary for that judgment.</p>" +
+    "<h3>The six pillars</h3>" +
+    "<ul><li><b>Operational excellence</b> — the ability to run and monitor systems to deliver business value, and to continually improve supporting processes.</li>" +
+    "<li><b>Security</b> — protecting information, systems, and assets through risk assessments and mitigation strategies.</li>" +
+    "<li><b>Reliability</b> — the ability to recover from infrastructure or service disruptions, dynamically acquire computing resources to meet demand, and mitigate issues like misconfigurations or transient network problems.</li>" +
+    "<li><b>Performance efficiency</b> — using computing resources efficiently to meet requirements, and maintaining that efficiency as demand and technology evolve.</li>" +
+    "<li><b>Cost optimization</b> — avoiding unnecessary costs and understanding where money is being spent.</li>" +
+    "<li><b>Sustainability</b> — minimizing the environmental impact of running cloud workloads — the newest of the six pillars.</li></ul>" +
+    "<div class='callout'><span class='uc'>Exam note</span><p>The exam tends to describe a scenario and ask which pillar it best maps to — \"a team wants automated rollback if a deployment fails\" is operational excellence; \"a company wants to right-size instances to cut unnecessary spend\" is cost optimization. Practice matching the scenario to the pillar, not memorizing the list in isolation.</p></div>" +
+    "<h3>Why this matters beyond the exam</h3>" +
+    "<p>The six pillars aren't independent — they trade off against each other constantly. Maximizing reliability (more redundancy, more standby capacity) usually costs more, working against cost optimization. A well-architected system doesn't maximize every pillar; it makes a deliberate, documented tradeoff appropriate to the workload's actual requirements.</p>"
+},
+awsSharedResponsibility: {
+  title:"The AWS Shared Responsibility Model",
+  html:
+    "<p>Moving to AWS doesn't mean security becomes AWS's problem alone. The shared responsibility model draws a clear line between what AWS secures and what the customer must secure — and, just like in Azure, that line moves depending on which service you use.</p>" +
+    "<h3>Security OF the cloud vs. security IN the cloud</h3>" +
+    "<p><b>AWS is responsible for security OF the cloud</b> — the physical infrastructure, hardware, software, networking, and facilities that run AWS services. <b>The customer is responsible for security IN the cloud</b> — their own data, identity and access management configuration, and (depending on the service) guest operating system, network, and firewall configuration.</p>" +
+    "<div class='diagram-flow'>" +
+      "<div class='step'>AWS<br><span style='color:var(--text-faint)'>security OF the cloud</span></div><div class='arrow'>&#8596;</div>" +
+      "<div class='step'>Customer<br><span style='color:var(--text-faint)'>security IN the cloud</span></div>" +
+    "</div>" +
+    "<h3>The line moves by service type</h3>" +
+    "<p>For an <b>EC2 instance</b> (infrastructure-level), AWS manages the physical host and hypervisor, but the customer owns everything from the guest OS upward — including patching it. For a <b>fully managed service like Amazon S3</b>, AWS takes on more of the stack — there's no guest OS for the customer to patch at all — leaving the customer responsible mainly for data classification, bucket/access policies, and client-side encryption choices.</p>" +
+    "<div class='callout'><span class='uc'>Exam note</span><p>One line never moves regardless of service type: the customer's own data, identity configuration, and access management are always the customer's responsibility. A misconfigured S3 bucket policy that exposes data publicly is a customer failure under the shared responsibility model, no matter how secure AWS's underlying infrastructure is.</p></div>" +
+    "<h3>Compliance documentation</h3>" +
+    "<p><b>AWS Artifact</b> is the self-service portal where customers can access AWS's compliance reports and audit documentation on demand — useful evidence when a customer needs to demonstrate their own compliance posture to an auditor or regulator.</p>"
+},
+awsIAM: {
+  title:"AWS Identity &amp; Access Management (IAM)",
+  html:
+    "<p>The shared responsibility model makes identity and access management the customer's job, always. IAM is AWS's service for controlling exactly who — and what — can do what, inside an AWS account.</p>" +
+    "<h3>The root user</h3>" +
+    "<p>Every AWS account starts with a <b>root user</b>, created automatically and holding unrestricted access to every resource and to billing itself. Its power makes it a dangerous daily driver — best practice is to secure it immediately with MFA, avoid using it for day-to-day work, and delegate actual tasks to IAM users and roles instead.</p>" +
+    "<h3>Users, groups, and roles</h3>" +
+    "<ul><li><b>IAM users</b> — long-term identities (a person or an application) with permanent credentials.</li>" +
+    "<li><b>IAM groups</b> — collections of users that let administrators attach a shared permissions policy once, instead of managing each user's permissions individually.</li>" +
+    "<li><b>IAM roles</b> — identities that get <i>assumed</i> temporarily (by a user, an application, or an AWS service itself) and issue short-lived credentials rather than permanent keys — reducing the risk of a long-lived secret leaking.</li></ul>" +
+    "<h3>Policies and least privilege</h3>" +
+    "<p>Permissions are defined in <b>IAM policies</b> — JSON documents specifying which actions are allowed or denied, against which resources, optionally under specific conditions. The guiding principle is <b>least privilege</b>: grant only the minimum permissions an identity actually needs to do its job, nothing more — limiting the blast radius if that identity is ever compromised or misused.</p>" +
+    "<h3>Multi-factor authentication</h3>" +
+    "<p><b>MFA</b> requires a second, independent verification factor beyond the password at sign-in, so a leaked password alone isn't enough to compromise an account. It's especially critical on the root user, given its unrestricted reach.</p>" +
+    "<div class='callout'><span class='uc'>Exam note</span><p>Users vs. roles is a favorite exam distinction: if a scenario mentions temporary access, cross-account access, or an AWS service (like an EC2 instance) needing permission to call other AWS APIs, that's a role — not a user.</p></div>"
+},
+awsGovernanceSecurity: {
+  title:"Cloud Security, Governance &amp; Compliance Concepts",
+  html:
+    "<p>IAM controls access within a single account. This lesson covers the tools AWS provides for governing across many accounts, protecting infrastructure from external threats, and proving compliance.</p>" +
+    "<h3>AWS Organizations &amp; Service Control Policies</h3>" +
+    "<p><b>AWS Organizations</b> lets a company centrally manage and govern multiple AWS accounts — consolidated billing across all of them, plus policy-based governance applied uniformly. <b>Service Control Policies (SCPs)</b> set the maximum available permissions for accounts within an organization or organizational unit — a guardrail that even that account's own administrators cannot exceed, regardless of what their own IAM policies allow.</p>" +
+    "<h3>Encryption and network protection</h3>" +
+    "<ul><li><b>AWS Key Management Service (KMS)</b> — creates and controls the encryption keys used to protect data across AWS services.</li>" +
+    "<li><b>AWS Shield</b> — managed protection against Distributed Denial of Service (DDoS) attacks.</li>" +
+    "<li><b>AWS WAF (Web Application Firewall)</b> — monitors and controls HTTP/HTTPS requests reaching a web application, filtering out malicious patterns like SQL injection or cross-site scripting.</li></ul>" +
+    "<h3>Compliance documentation</h3>" +
+    "<p><b>AWS Artifact</b> is the on-demand, self-service source for AWS's independent compliance reports and audit documentation — the resource to point to when a customer needs to demonstrate their compliance posture to an auditor.</p>" +
+    "<div class='callout'><span class='uc'>Exam note</span><p>Notice the layering: SCPs govern what accounts are allowed to do at all, IAM governs what identities within an account are allowed to do, KMS/Shield/WAF protect data and traffic directly, and Artifact documents compliance after the fact. Different governance questions, different tools.</p></div>"
+},
+awsGlobalInfra: {
+  title:"AWS Global Infrastructure",
+  html:
+    "<p>Before choosing a service, you need AWS's vocabulary for where things physically run. This lesson covers Regions, Availability Zones, and Edge Locations — and how to reason about choosing between them.</p>" +
+    "<h3>Regions</h3>" +
+    "<p>An <b>AWS Region</b> is a separate geographic area containing multiple, isolated locations called Availability Zones — the top-level unit a customer picks when deciding where to deploy resources (e.g., US East, Ohio or EU West, Ireland). Choosing a Region is a real architecture decision, driven by:</p>" +
+    "<ul><li><b>Latency</b> — deploying closer to your actual users reduces round-trip time.</li>" +
+    "<li><b>Compliance and data residency</b> — some data must legally stay within a specific country or region.</li>" +
+    "<li><b>Cost</b> — pricing varies by Region.</li>" +
+    "<li><b>Service and feature availability</b> — not every AWS service launches in every Region simultaneously.</li></ul>" +
+    "<h3>Availability Zones</h3>" +
+    "<p>An <b>Availability Zone (AZ)</b> is one or more discrete data centers with redundant power, networking, and connectivity, isolated from failures in other AZs within the same Region but connected via low-latency links. Deploying resources across multiple AZs protects against a datacenter-level failure — power loss, networking issues, a localized natural disaster — without losing the whole application.</p>" +
+    "<div class='diagram-flow'>" +
+      "<div class='step'>Availability Zone<br><span style='color:var(--text-faint)'>protects vs. datacenter failure</span></div><div class='arrow'>&#8594;</div>" +
+      "<div class='step'>Region<br><span style='color:var(--text-faint)'>set of AZs</span></div><div class='arrow'>&#8594;</div>" +
+      "<div class='step'>Multi-Region<br><span style='color:var(--text-faint)'>protects vs. regional disaster</span></div>" +
+    "</div>" +
+    "<h3>Edge Locations</h3>" +
+    "<p><b>Edge Locations</b> are a separate, much larger network of caching sites used by services like Amazon CloudFront to serve content from somewhere physically closer to the end user — distinct from Regions and AZs, and far more numerous.</p>" +
+    "<div class='callout'><span class='uc'>Exam note</span><p>Same relationship as Azure's AZs vs. region pairs: spreading across AZs handles a single-facility failure; spreading across Regions is the answer when the entire Region itself could become unavailable — two different scales of resilience for two different kinds of risk.</p></div>"
+},
+awsDeployOps: {
+  title:"Deployment &amp; Operation Methods",
+  html:
+    "<p>Every AWS resource in this platform so far could be created by hand, one click at a time — but production environments need something more repeatable. This lesson covers AWS's tools for managing and deploying resources at any scale.</p>" +
+    "<h3>The Management Console</h3>" +
+    "<p>The <b>AWS Management Console</b> is the primary web-based graphical interface for creating, configuring, and monitoring AWS resources — the natural starting point for exploring a service or making a one-off change.</p>" +
+    "<h3>Programmatic access</h3>" +
+    "<p>The <b>AWS Command Line Interface (CLI)</b> is a unified tool for managing AWS services from a terminal via typed commands, enabling scripting and automation across platforms. <b>AWS SDKs</b> (Software Development Kits) let developers interact with AWS services directly from application code in languages like Python, Java, or JavaScript, instead of driving everything manually through the console or CLI.</p>" +
+    "<h3>Infrastructure as code</h3>" +
+    "<p><b>AWS CloudFormation</b> defines and provisions infrastructure using declarative template files, so environments can be created consistently and repeatably — the same template redeploys an identical environment every time, rather than depending on someone remembering every manual click.</p>" +
+    "<h3>Managed application deployment</h3>" +
+    "<p><b>AWS Elastic Beanstalk</b> simplifies deploying and managing web applications without manually provisioning and configuring the underlying infrastructure (EC2, load balancing, Auto Scaling) — upload application code, and Beanstalk handles the rest as a Platform-as-a-Service layer.</p>" +
+    "<div class='callout'><span class='uc'>Exam note</span><p>CLI/SDK and CloudFormation both automate AWS, but for different jobs: CLI/SDK issue individual commands or API calls; CloudFormation declares an entire desired end state and lets AWS figure out how to get there, repeatably.</p></div>"
+},
+awsCompute: {
+  title:"Core AWS Compute Services",
+  html:
+    "<p>Compute is where a workload actually runs. AWS offers several distinct compute models, trading control for management overhead in different ways — recognizing which one fits a given scenario is a heavily tested skill.</p>" +
+    "<h3>Amazon EC2</h3>" +
+    "<p><b>Amazon EC2</b> provides resizable virtual servers (instances) in the cloud, giving the customer control over the operating system and installed software — AWS's core IaaS compute offering, closest to running your own on-premises server, just on AWS-managed hardware.</p>" +
+    "<h3>AWS Lambda</h3>" +
+    "<p><b>AWS Lambda</b> is serverless compute — code runs only in response to a trigger (an HTTP request, a file upload, a schedule), with AWS automatically managing the underlying compute and billing only for actual execution time. For short, event-driven work, Lambda avoids the overhead of keeping an EC2 instance running (or managing its scaling) just to wait for occasional triggers.</p>" +
+    "<h3>Containers: ECS, EKS &amp; Fargate</h3>" +
+    "<p><b>Amazon ECS</b> and <b>Amazon EKS</b> are both container orchestration services — ECS is AWS's own proprietary orchestrator, EKS runs the open-source Kubernetes standard as a managed service. Both run and scale containerized applications, but need somewhere to actually execute those containers. <b>AWS Fargate</b> is a serverless compute engine that works with either ECS or EKS, removing the need to provision or manage the underlying EC2 instances that would normally host the containers.</p>" +
+    "<div class='diagram-flow'>" +
+      "<div class='step'>EC2<br><span style='color:var(--text-faint)'>most control</span></div><div class='arrow'>&#8594;</div>" +
+      "<div class='step'>ECS/EKS + EC2<br><span style='color:var(--text-faint)'>orchestrated, self-managed hosts</span></div><div class='arrow'>&#8594;</div>" +
+      "<div class='step'>ECS/EKS + Fargate<br><span style='color:var(--text-faint)'>no host management</span></div><div class='arrow'>&#8594;</div>" +
+      "<div class='step'>Lambda<br><span style='color:var(--text-faint)'>no server thinking at all</span></div>" +
+    "</div>" +
+    "<div class='callout'><span class='uc'>Exam note</span><p>Exam scenarios describe a need (\"process a file only when it's uploaded, with zero ongoing server cost\") and expect you to map it to the right compute model — that's Lambda, not EC2, even though EC2 could technically do it less efficiently.</p></div>"
+},
+awsStorageDbNetwork: {
+  title:"Storage, Database &amp; Networking Services",
+  html:
+    "<p>Compute needs somewhere to keep data and a network to talk over. This lesson is a fast tour of the AWS services named specifically on the exam for storage, databases, and networking.</p>" +
+    "<h3>Storage: S3 and EBS</h3>" +
+    "<p><b>Amazon S3</b> is scalable object storage for virtually any amount of unstructured data — documents, images, backups, static website content — accessed over the web. <b>S3 storage classes</b> (Standard, Infrequent Access, Glacier, and others) let customers balance storage cost against retrieval cost/speed based on how often the data is actually accessed, the same tradeoff Azure's access tiers make. <b>Amazon EBS</b> provides persistent, attachable block-level storage volumes for a single EC2 instance — the virtual-disk equivalent of a physical hard drive.</p>" +
+    "<h3>Databases: RDS and DynamoDB</h3>" +
+    "<p><b>Amazon RDS</b> is a managed relational (SQL) database service supporting engines like MySQL and PostgreSQL, with AWS handling patching, backups, and availability. <b>Amazon DynamoDB</b> is a fully managed NoSQL key-value/document database built for extreme scale and single-digit-millisecond latency — a fundamentally different data model, not just a relational database with a different name.</p>" +
+    "<h3>Networking: VPC, Route 53 &amp; CloudFront</h3>" +
+    "<p><b>Amazon VPC (Virtual Private Cloud)</b> is a logically isolated virtual network within AWS, giving the customer control over IP addressing, subnets, route tables, and gateways — the network foundation everything else runs inside. <b>Amazon Route 53</b> is a scalable DNS web service for domain registration and routing. <b>Amazon CloudFront</b> is a content delivery network (CDN) that caches content at edge locations closer to users, reducing latency for content delivery.</p>" +
+    "<div class='callout'><span class='uc'>Exam note</span><p>Route 53 and CloudFront are commonly confused: Route 53 resolves domain names to addresses (DNS); CloudFront caches and delivers the actual content faster once a request arrives. They're often used together, but they solve different problems.</p></div>"
+},
+awsPricing: {
+  title:"AWS Pricing Models",
+  html:
+    "<p>Consumption-based pricing means the same workload can cost very different amounts depending on how it's purchased. This lesson covers the pricing models AWS offers and when each one actually makes sense.</p>" +
+    "<h3>On-Demand</h3>" +
+    "<p><b>On-Demand</b> pricing means paying for compute or database capacity by the hour or second, with no long-term commitments or upfront payments — maximum flexibility, typically at the highest per-unit rate. It's the right default for unpredictable or short-term workloads, where committing to a discount you might not fully use would cost more than it saves.</p>" +
+    "<h3>Reserved Instances &amp; Savings Plans</h3>" +
+    "<p><b>Reserved Instances</b> and <b>Savings Plans</b> trade a usage commitment (typically 1 or 3 years) for a significantly discounted rate versus On-Demand. This only pays off when usage is genuinely predictable — a steady, 24/7 baseline workload is exactly the pattern this pricing model is built to reward.</p>" +
+    "<h3>Spot Instances</h3>" +
+    "<p><b>EC2 Spot Instances</b> use spare, unused EC2 capacity at steep discounts compared to On-Demand — but AWS can reclaim that capacity with short notice. Spot fits flexible, interruption-tolerant workloads (batch processing, some CI/CD jobs), not anything requiring guaranteed uptime.</p>" +
+    "<h3>Free Tier</h3>" +
+    "<p>The <b>AWS Free Tier</b> offers limited free usage of certain services for a period (commonly 12 months) or always-free limits, letting new customers try services at no cost within defined limits — not unlimited free usage.</p>" +
+    "<div class='diagram-flow'>" +
+      "<div class='step'>On-Demand<br><span style='color:var(--text-faint)'>most flexible, highest rate</span></div><div class='arrow'>&#8594;</div>" +
+      "<div class='step'>Reserved / Savings Plans<br><span style='color:var(--text-faint)'>commit for a discount</span></div><div class='arrow'>&#8594;</div>" +
+      "<div class='step'>Spot<br><span style='color:var(--text-faint)'>cheapest, can be reclaimed</span></div>" +
+    "</div>"
+},
+awsBillingSupport: {
+  title:"Billing, Cost Management &amp; Support Resources",
+  html:
+    "<p>Consumption-based pricing across dozens of services can get away from you without the right visibility. This closing lesson covers AWS's tools for tracking spend and the support resources available when something needs a human.</p>" +
+    "<h3>Cost visibility and control</h3>" +
+    "<ul><li><b>AWS Cost Explorer</b> — visualizes and analyzes cost and usage over time, including forecasting future spend.</li>" +
+    "<li><b>AWS Budgets</b> — lets you set custom cost or usage thresholds and receive alerts when actual or forecasted spend approaches or exceeds them.</li>" +
+    "<li><b>AWS Pricing Calculator</b> — estimates the cost of AWS services <i>before</i> deploying them, by modeling a planned architecture's configuration and expected usage.</li>" +
+    "<li><b>AWS Organizations consolidated billing</b> — combines usage across every linked account into a single bill, potentially unlocking volume pricing discounts while still preserving per-account cost detail.</li></ul>" +
+    "<h3>Support plans</h3>" +
+    "<p>AWS offers four support tiers — <b>Basic, Developer, Business, and Enterprise</b> — differing in response times, access to Trusted Advisor checks, and (at the top tier) access to a dedicated Technical Account Manager (TAM) for proactive guidance. Higher tiers mean faster guaranteed response and more proactive support, not a different underlying set of AWS services.</p>" +
+    "<h3>AWS Trusted Advisor</h3>" +
+    "<p><b>Trusted Advisor</b> inspects your actual account against AWS best practices across five categories — cost optimization, performance, security, fault tolerance, and service limits — and surfaces specific, actionable recommendations, similar in spirit to Azure Advisor.</p>" +
+    "<div class='callout'><span class='uc'>Exam note</span><p>Notice the parallel to the Cloud Concepts domain's economic case: Cost Explorer/Budgets/Pricing Calculator are how an organization actually operationalizes the pay-as-you-go promise, turning 'variable expense' from a slogan into something managed day to day.</p></div>"
 }
 };
 
@@ -2170,6 +2506,165 @@ azCapstone3: {
     { id:5, prompt:"Which practice satisfies operations' 'identical repeatable environments, no silent drift' ask?", accept:["infrastructure as code","iac","arm templates","arm/bicep templates"], xp:100, hint:"Machine-readable definition files that redeploy an identical environment every time, instead of manual one-off configuration." },
     { id:6, prompt:"Which Azure Monitor feature satisfies operations' proactive CPU-threshold notification ask?", accept:["azure monitor alerts","alerts","monitor alerts"], xp:75, hint:"Automatically triggered when a defined condition is met against collected metrics, with no human watching a dashboard." }
   ]
+},
+awsLab1: {
+  title:"LAB: Match the Advantage & Pillar",
+  briefHtml:"<p>A cloud consultant (that's you) needs to map four situations to the correct cloud advantage or Well-Architected pillar. File: <code>scenarios.txt</code>. Name the specific concept that fits each one.</p><p>Use <code>ls</code>, <code>cat</code>, and <code>grep</code> to review the file. Type <code>help</code> in the terminal any time.</p>",
+  files: {
+"scenarios.txt":
+"SCENARIO A | A retailer used to spend millions up front building out server rooms years before knowing actual demand. After moving to AWS, they only pay for the compute they use each month.\n\n"+
+"SCENARIO B | A gaming company's traffic is nearly impossible to forecast ahead of a new release. On AWS they add and remove server capacity automatically as real demand shifts, instead of guessing months in advance.\n\n"+
+"SCENARIO C | An architecture review flags that a critical workload has no redundancy across data centers and no plan for recovering from an infrastructure disruption.\n\n"+
+"SCENARIO D | A team wants to reduce their AWS bill by identifying and right-sizing over-provisioned, underused EC2 instances.\n"
+  },
+  objectives:[
+    { id:1, prompt:"Which of the six cloud advantages fits Scenario A?", accept:["trade capital expense for variable expense","capex to opex","trade capex for opex"], xp:50, hint:"No large hardware purchase up front, pay for what's actually consumed — this is exactly the CapEx-to-OpEx tradeoff." },
+    { id:2, prompt:"Which of the six cloud advantages fits Scenario B?", accept:["stop guessing capacity"], xp:50, hint:"Scaling automatically to match real demand, instead of forecasting months ahead, has a specific name among the six advantages." },
+    { id:3, prompt:"Which Well-Architected pillar is the review in Scenario C flagging a gap in?", accept:["reliability"], xp:75, hint:"Recovering from infrastructure disruptions and having redundancy is specifically the reliability pillar's territory." },
+    { id:4, prompt:"Which Well-Architected pillar is Scenario D's team working on?", accept:["cost optimization"], xp:75, hint:"Right-sizing to eliminate wasted spend is exactly what this pillar is about." }
+  ]
+},
+awsCapstone1: {
+  title:"CAPSTONE: Pitch the Cloud Migration",
+  briefHtml:"<p>Meridian Freight, a logistics company still running its own data center, wants a business case for moving to AWS. File: <code>meridian_brief.txt</code>. Build the pitch using this domain's concepts.</p>",
+  files: {
+"meridian_brief.txt":
+"Meridian Freight runs a fleet-tracking application on aging, self-owned servers.\n\n"+
+"- The CFO is tired of large upfront hardware purchases every 3 years that then sit partially idle for the first year.\n"+
+"- Order volume spikes unpredictably around holidays and severe weather events, and the current servers either fall over or sit idle the rest of the year.\n"+
+"- The VP of Engineering wants any future architecture review to explicitly force a conversation about acceptable downtime and disaster recovery, not leave it as an afterthought.\n"+
+"- Meridian is expanding into a new country next quarter and wants their tracking app to feel fast for customers there without building a new physical data center.\n"
+  },
+  objectives:[
+    { id:1, prompt:"Which cloud advantage most directly addresses the CFO's complaint about large upfront hardware purchases?", accept:["trade capital expense for variable expense","capex to opex"], xp:75, hint:"The CFO's complaint is specifically about CapEx timing and idle capacity." },
+    { id:2, prompt:"Which cloud advantage addresses the unpredictable holiday/weather demand spikes?", accept:["stop guessing capacity"], xp:75, hint:"Matching capacity to real-time demand instead of guessing is the advantage built for exactly this problem." },
+    { id:3, prompt:"Which Well-Architected pillar should the VP's requested review focus on?", accept:["reliability"], xp:100, hint:"Downtime tolerance and disaster recovery planning map directly to one specific pillar." },
+    { id:4, prompt:"Which cloud advantage lets Meridian serve the new country fast without building physical infrastructure there?", accept:["go global in minutes"], xp:100, hint:"Deploying into a new AWS Region to get closer to users, without new physical construction, has a specific name among the six advantages." }
+  ]
+},
+awsLab2: {
+  title:"LAB: Fix the IAM Misconfiguration",
+  briefHtml:"<p>A junior admin at Northwind Labs set up IAM in a hurry. File: <code>iam_audit.txt</code>. Identify what's wrong with each finding and name the fix.</p>",
+  files: {
+"iam_audit.txt":
+"FINDING 1 | The team has been using the AWS account root user credentials for daily development work for the past six months, with no MFA enabled on the root user.\n\n"+
+"FINDING 2 | 40 individual developers each have a hand-crafted IAM policy attached directly to their user, making it slow and error-prone to update permissions when the team's access needs change.\n\n"+
+"FINDING 3 | An EC2 application needs to read from an S3 bucket. The previous admin embedded a long-lived IAM user's access key directly in the application's source code to grant that access.\n\n"+
+"FINDING 4 | Every developer on the team has been granted full AdministratorAccess so nobody has to file a ticket when they need one more permission.\n"
+  },
+  objectives:[
+    { id:1, prompt:"What two-part fix addresses Finding 1?", accept:["enable mfa and stop using root","mfa and stop using the root user","enable mfa, use iam users instead of root"], xp:75, hint:"The root user needs a second verification factor, and daily work should move off it entirely onto IAM identities." },
+    { id:2, prompt:"What IAM construct should replace 40 individually-managed user policies in Finding 2?", accept:["iam groups","groups"], xp:75, hint:"A construct exists specifically to let admins attach one shared policy to many users at once." },
+    { id:3, prompt:"What should replace the embedded long-lived access key in Finding 3?", accept:["iam role","an iam role","use an iam role instead"], xp:100, hint:"An EC2 instance needing to call another AWS service should assume a temporary identity, not carry permanent embedded credentials." },
+    { id:4, prompt:"What IAM principle is being violated in Finding 4?", accept:["least privilege","principle of least privilege"], xp:75, hint:"Granting broad access by default to avoid ticket friction is the direct opposite of this core IAM principle." }
+  ]
+},
+awsCapstone2: {
+  title:"CAPSTONE: Secure the Account",
+  briefHtml:"<p>Northwind Labs wants a full security review before their SOC 2 audit. Files: <code>account_state.txt</code> and <code>audit_requirements.txt</code>. Recommend the right AWS tool or concept for each gap.</p>",
+  files: {
+"account_state.txt":
+"Current state of the Northwind Labs AWS account:\n"+
+"- Three subsidiary AWS accounts exist with no central governance — each can be configured however its own admin wants, including disabling security services.\n"+
+"- Data stored in S3 and RDS is currently unencrypted.\n"+
+"- The public-facing web app has no protection against a flood of malicious traffic beyond what the web server itself can absorb.\n"+
+"- No one on the team can produce documentation proving AWS's own compliance posture (SOC 2, ISO certifications) when the auditor asks for it.\n",
+"audit_requirements.txt":
+"The SOC 2 auditor requires written evidence that:\n"+
+"1) No subsidiary account can disable required security controls, no matter what its local admin wants.\n"+
+"2) All data at rest has a defined encryption key management process.\n"+
+"3) The public web app has documented protection against distributed denial-of-service attacks.\n"+
+"4) AWS's own compliance certifications can be produced on demand.\n"
+  },
+  objectives:[
+    { id:1, prompt:"Which AWS Organizations feature satisfies requirement 1?", accept:["service control policies","scps","service control policy"], xp:100, hint:"A guardrail that sets the maximum permissions for member accounts, which even their own admins cannot exceed." },
+    { id:2, prompt:"Which AWS service satisfies requirement 2?", accept:["aws kms","kms","key management service"], xp:75, hint:"Creates and controls the encryption keys used across AWS services." },
+    { id:3, prompt:"Which AWS service satisfies requirement 3?", accept:["aws shield","shield"], xp:75, hint:"AWS's managed protection specifically against distributed denial-of-service attacks." },
+    { id:4, prompt:"Which AWS resource satisfies requirement 4?", accept:["aws artifact","artifact"], xp:100, hint:"The self-service portal for AWS's own compliance reports and audit documentation." }
+  ]
+},
+awsLab3: {
+  title:"LAB: Match the Workload to the Right AWS Service",
+  briefHtml:"<p>Five workload requirements just came in. File: <code>requirements.txt</code>. Name the specific AWS service that fits each one.</p>",
+  files: {
+"requirements.txt":
+"REQ 1 | A photo-sharing app needs to run a resizing script only when a user uploads a new photo, with zero cost when nobody is uploading anything.\n\n"+
+"REQ 2 | An analytics team needs a NoSQL database that can handle massive, unpredictable scale with single-digit-millisecond response times.\n\n"+
+"REQ 3 | A media company wants their video-on-demand site to feel fast for users on every continent, by caching content physically close to each viewer.\n\n"+
+"REQ 4 | A team wants to run a containerized microservice without provisioning or patching any underlying EC2 servers themselves.\n\n"+
+"REQ 5 | A finance team needs an object storage tier for 7-year regulatory retention of records they almost never expect to read.\n"
+  },
+  objectives:[
+    { id:1, prompt:"Which AWS service fits REQ 1?", accept:["aws lambda","lambda"], xp:75, hint:"Event-triggered, pay only for execution time, zero idle cost." },
+    { id:2, prompt:"Which AWS service fits REQ 2?", accept:["dynamodb","amazon dynamodb"], xp:75, hint:"Purpose-built NoSQL service for massive scale and very low latency, not a relational engine." },
+    { id:3, prompt:"Which AWS service fits REQ 3?", accept:["cloudfront","amazon cloudfront"], xp:75, hint:"A CDN that caches content at edge locations close to end users." },
+    { id:4, prompt:"Which AWS service/feature fits REQ 4?", accept:["fargate","aws fargate"], xp:100, hint:"Serverless compute for containers — removes the need to manage the underlying EC2 hosts entirely." },
+    { id:5, prompt:"Which S3 storage class fits REQ 5?", accept:["glacier","s3 glacier"], xp:100, hint:"Lowest storage cost, highest retrieval cost/latency, built for rarely-accessed archival data." }
+  ]
+},
+awsLab4: {
+  title:"LAB: Design the Region & Network Layout",
+  briefHtml:"<p>Vantage Health needs a network and region strategy for a new patient-portal workload. File: <code>vantage_requirements.txt</code>. Recommend the right AWS concept for each requirement.</p>",
+  files: {
+"vantage_requirements.txt":
+"Vantage Health's requirements for the new patient portal:\n\n"+
+"1) Patient data must legally stay within their home country's borders — no exceptions.\n"+
+"2) The application must survive the complete loss of a single data center without any downtime or data loss.\n"+
+"3) The portal needs its own logically isolated network with full control over subnets and routing, separate from any other AWS customer.\n"+
+"4) The team needs a way to resolve their custom domain name (portal.vantagehealth.example) to the application's AWS resources.\n"
+  },
+  objectives:[
+    { id:1, prompt:"Which AWS concept most directly governs requirement 1?", accept:["region","aws region","region selection"], xp:75, hint:"Choosing where to deploy — driven partly by legal data-residency requirements — is a decision made at this level of AWS's global infrastructure." },
+    { id:2, prompt:"Which AWS concept satisfies requirement 2?", accept:["availability zones","multiple availability zones","multi-az"], xp:100, hint:"Spreading resources across multiple of these within a Region protects against a single datacenter-level failure." },
+    { id:3, prompt:"Which AWS service satisfies requirement 3?", accept:["vpc","amazon vpc","virtual private cloud"], xp:75, hint:"A logically isolated virtual network within AWS, with full control over subnets and routing." },
+    { id:4, prompt:"Which AWS service satisfies requirement 4?", accept:["route 53","amazon route 53"], xp:75, hint:"AWS's DNS web service for domain registration and routing." }
+  ]
+},
+awsCapstone3: {
+  title:"CAPSTONE: Architect the AWS Deployment",
+  briefHtml:"<p>Solstice Retail is moving its order-processing platform to AWS. Three files describe the requirements: <code>org_requirements.txt</code>, <code>workload_requirements.txt</code>, and <code>ops_requirements.txt</code>. Design the deployment end to end.</p>",
+  files: {
+"org_requirements.txt":
+"Solstice Retail has two AWS accounts, one per business unit, both needing the same baseline security guardrails applied without configuring them twice.\n",
+"workload_requirements.txt":
+"The order-processing app should run as containers without the team managing any underlying EC2 hosts.\n"+
+"Order data needs a relational database with automated backups and patching handled by AWS.\n"+
+"Product images need scalable, durable object storage, with rarely-accessed old catalog images moved to the cheapest possible tier.\n"+
+"The application must keep running through the loss of a single data center within its Region.\n",
+"ops_requirements.txt":
+"The team wants to deploy identical environments for dev, test, and prod from the same reusable definition, with zero manual console clicking.\n"+
+"They also want proactive email alerts before their monthly AWS bill exceeds budget.\n"
+  },
+  objectives:[
+    { id:1, prompt:"Which AWS Organizations feature applies shared guardrails to both accounts at once?", accept:["service control policies","scps"], xp:100, hint:"A policy type applied at the organization or OU level that member accounts cannot exceed, regardless of local admin choices." },
+    { id:2, prompt:"Which compute approach satisfies 'containers with no EC2 host management'?", accept:["fargate","aws fargate","ecs with fargate","eks with fargate"], xp:100, hint:"Serverless compute for containers, paired with ECS or EKS." },
+    { id:3, prompt:"Which AWS database service fits the relational database requirement?", accept:["rds","amazon rds"], xp:75, hint:"Managed relational database service with automated patching and backups." },
+    { id:4, prompt:"Which AWS concept satisfies 'survive the loss of a single data center'?", accept:["availability zones","multi-az"], xp:100, hint:"Deploying across multiple of these within a Region is the standard defense against a single-facility failure." },
+    { id:5, prompt:"Which practice satisfies the 'identical reusable environments, no manual clicking' requirement?", accept:["cloudformation","aws cloudformation","infrastructure as code"], xp:100, hint:"AWS's native infrastructure-as-code service, for exactly this kind of repeatable deployment." },
+    { id:6, prompt:"Which AWS tool satisfies the proactive budget-alert requirement?", accept:["aws budgets","budgets"], xp:75, hint:"Lets you set a spending threshold and get notified when forecasted spend approaches or crosses it." }
+  ]
+},
+awsCapstone4: {
+  title:"CAPSTONE: Right-Size the Bill",
+  briefHtml:"<p>Solstice Retail's finance team is alarmed by a growing AWS bill. Files: <code>usage_patterns.txt</code> and <code>finance_asks.txt</code>. Recommend the right pricing model or billing tool for each situation.</p>",
+  files: {
+"usage_patterns.txt":
+"WORKLOAD A | The core order-processing service runs 24/7 with steady, highly predictable load, and is expected to keep running this way for at least the next year.\n\n"+
+"WORKLOAD B | A nightly batch job that reprocesses old orders can tolerate being interrupted and restarted, and only needs to finish sometime before 8 AM.\n\n"+
+"WORKLOAD C | A brand-new experimental feature has completely unknown, unpredictable usage for the next few months while the team figures out if it's worth keeping.\n",
+"finance_asks.txt":
+"Finance wants to know, before anything is deployed, roughly what a proposed new architecture will cost per month.\n"+
+"Finance also wants an automatic alert if any month's forecasted spend is on track to exceed the approved budget.\n"+
+"Finance wants a historical view of exactly which services have been driving the most cost over the past six months.\n"
+  },
+  objectives:[
+    { id:1, prompt:"Which pricing model fits Workload A?", accept:["reserved instances","savings plans","reserved instances / savings plans"], xp:75, hint:"Steady, predictable, long-term usage is exactly the pattern this pricing model is built to discount." },
+    { id:2, prompt:"Which pricing model fits Workload B?", accept:["spot instances","spot"], xp:75, hint:"Interruption-tolerant, flexible-timing workloads are the ideal fit for the deepest-discount, reclaimable capacity option." },
+    { id:3, prompt:"Which pricing model fits Workload C?", accept:["on-demand","on demand"], xp:75, hint:"Genuinely unpredictable usage doesn't justify locking into a multi-year commitment for a discount." },
+    { id:4, prompt:"Which AWS tool satisfies finance's 'estimate cost before deploying' ask?", accept:["aws pricing calculator","pricing calculator"], xp:75, hint:"Purpose-built to model a planned deployment's cost before anything is actually provisioned." },
+    { id:5, prompt:"Which AWS tool satisfies finance's automatic budget-alert ask?", accept:["aws budgets","budgets"], xp:75, hint:"Lets you set a threshold and get notified when forecasted spend approaches or exceeds it." },
+    { id:6, prompt:"Which AWS tool satisfies finance's 'historical view of what's driving cost' ask?", accept:["cost explorer","aws cost explorer"], xp:75, hint:"Visualizes and analyzes cost and usage trends over time, by service." }
+  ]
 }
 };
 
@@ -2237,12 +2732,12 @@ var DOMAINS_CYBERSECURITY = [
 ];
 
 /* ============================================================
-   DOMAINS: CLOUD (AZ-900 Microsoft Azure Fundamentals)
+   DOMAINS: AZURE (AZ-900 Microsoft Azure Fundamentals)
    Mirrors DOMAINS_CYBERSECURITY's exact shape — the reference-swap
    pattern (see setSection()) means nothing else needs to change to
-   support a second live section.
+   support additional live sections.
 ============================================================ */
-var DOMAINS_CLOUD = [
+var DOMAINS_AZURE = [
   { id:'concepts', code:'D1', name:'Cloud Concepts', weight:28, tagline:'What the cloud actually is, and who owns what.', status:'live',
     overview:['Cloud computing, shared responsibility & deployment models','Consumption-based pricing & serverless','Benefits: availability, scalability, reliability, security, manageability','Cloud service types — IaaS, PaaS, SaaS'],
     nodes:[
@@ -2279,6 +2774,52 @@ var DOMAINS_CLOUD = [
 ];
 
 /* ============================================================
+   DOMAINS: AWS (AWS Certified Cloud Practitioner — CLF-C02)
+   Same shape as DOMAINS_AZURE/DOMAINS_CYBERSECURITY.
+============================================================ */
+var DOMAINS_AWS = [
+  { id:'awsconcepts', code:'D1', name:'Cloud Concepts', weight:24, tagline:'The business case for AWS, and how to judge an architecture.', status:'live',
+    overview:['The AWS Cloud & its value proposition','The six advantages of cloud computing','Cloud economics','The AWS Well-Architected Framework (6 pillars)'],
+    nodes:[
+      { id:'awsValueProp', type:'lesson', title:'The AWS Cloud & Its Value Proposition', xp:100, minutes:11, difficulty:'Easy', lessonKey:'awsValueProp', quizKey:'awsValueProp' },
+      { id:'awsWellArchitected', type:'lesson', title:'The AWS Well-Architected Framework', xp:100, minutes:12, difficulty:'Easy', lessonKey:'awsWellArchitected', quizKey:'awsWellArchitected' },
+      { id:'awsLab1', type:'lab', title:'LAB: Match the Advantage & Pillar', xp:250, minutes:15, difficulty:'Medium', labKey:'awsLab1' },
+      { id:'awsCapstone1', type:'lab', title:'CAPSTONE: Pitch the Cloud Migration', xp:400, minutes:22, difficulty:'Hard', labKey:'awsCapstone1' }
+    ]
+  },
+  { id:'awssecurity', code:'D2', name:'Security & Compliance', weight:30, tagline:'Who secures what, and how access is controlled.', status:'live',
+    overview:['The AWS shared responsibility model','AWS Identity & Access Management (IAM)','Cloud security, governance & compliance concepts','Security support resources (Artifact, Shield, WAF)'],
+    nodes:[
+      { id:'awsSharedResponsibility', type:'lesson', title:'The AWS Shared Responsibility Model', xp:100, minutes:12, difficulty:'Easy', lessonKey:'awsSharedResponsibility', quizKey:'awsSharedResponsibility' },
+      { id:'awsIAM', type:'lesson', title:'AWS Identity & Access Management (IAM)', xp:100, minutes:14, difficulty:'Medium', lessonKey:'awsIAM', quizKey:'awsIAM' },
+      { id:'awsGovernanceSecurity', type:'lesson', title:'Cloud Security, Governance & Compliance Concepts', xp:100, minutes:13, difficulty:'Medium', lessonKey:'awsGovernanceSecurity', quizKey:'awsGovernanceSecurity' },
+      { id:'awsLab2', type:'lab', title:'LAB: Fix the IAM Misconfiguration', xp:250, minutes:17, difficulty:'Medium', labKey:'awsLab2' },
+      { id:'awsCapstone2', type:'lab', title:'CAPSTONE: Secure the Account', xp:450, minutes:25, difficulty:'Hard', labKey:'awsCapstone2' }
+    ]
+  },
+  { id:'awstech', code:'D3', name:'Cloud Technology & Services', weight:34, tagline:'Global infrastructure, compute, storage, databases & networking.', status:'live',
+    overview:['AWS global infrastructure: Regions, AZs & Edge Locations','Deployment & operation methods (Console, CLI, SDKs, CloudFormation)','Core compute services (EC2, Lambda, ECS/EKS, Fargate)','Storage, database & networking services (S3, EBS, RDS, DynamoDB, VPC)'],
+    nodes:[
+      { id:'awsGlobalInfra', type:'lesson', title:'AWS Global Infrastructure', xp:100, minutes:13, difficulty:'Easy', lessonKey:'awsGlobalInfra', quizKey:'awsGlobalInfra' },
+      { id:'awsDeployOps', type:'lesson', title:'Deployment & Operation Methods', xp:100, minutes:14, difficulty:'Medium', lessonKey:'awsDeployOps', quizKey:'awsDeployOps' },
+      { id:'awsLab3', type:'lab', title:'LAB: Match the Workload to the Right AWS Service', xp:250, minutes:18, difficulty:'Medium', labKey:'awsLab3' },
+      { id:'awsCompute', type:'lesson', title:'Core AWS Compute Services', xp:100, minutes:15, difficulty:'Medium', lessonKey:'awsCompute', quizKey:'awsCompute' },
+      { id:'awsStorageDbNetwork', type:'lesson', title:'Storage, Database & Networking Services', xp:100, minutes:16, difficulty:'Medium', lessonKey:'awsStorageDbNetwork', quizKey:'awsStorageDbNetwork' },
+      { id:'awsLab4', type:'lab', title:'LAB: Design the Region & Network Layout', xp:250, minutes:18, difficulty:'Medium', labKey:'awsLab4' },
+      { id:'awsCapstone3', type:'lab', title:'CAPSTONE: Architect the AWS Deployment', xp:500, minutes:30, difficulty:'Hard', labKey:'awsCapstone3' }
+    ]
+  },
+  { id:'awsbilling', code:'D4', name:'Billing, Pricing & Support', weight:12, tagline:'Pay only for what you use — and know where it went.', status:'live',
+    overview:['AWS pricing models: On-Demand, Reserved, Spot, Free Tier','Billing & cost management tools (Cost Explorer, Budgets, Pricing Calculator)','Support plans & Trusted Advisor'],
+    nodes:[
+      { id:'awsPricing', type:'lesson', title:'AWS Pricing Models', xp:100, minutes:11, difficulty:'Easy', lessonKey:'awsPricing', quizKey:'awsPricing' },
+      { id:'awsBillingSupport', type:'lesson', title:'Billing, Cost Management & Support Resources', xp:100, minutes:12, difficulty:'Medium', lessonKey:'awsBillingSupport', quizKey:'awsBillingSupport' },
+      { id:'awsCapstone4', type:'lab', title:'CAPSTONE: Right-Size the Bill', xp:350, minutes:22, difficulty:'Hard', labKey:'awsCapstone4' }
+    ]
+  }
+];
+
+/* ============================================================
    RANKS (per-section rank ladders)
 ============================================================ */
 var RANKS_CYBERSECURITY = [
@@ -2287,17 +2828,24 @@ var RANKS_CYBERSECURITY = [
   {min:3750,name:'Lead Analyst'},{min:4500,name:'Detection Engineer'},{min:5250,name:'Principal Analyst'},
   {min:6000,name:'Detection Architect'},{min:6750,name:'SOC Manager'},{min:7500,name:'SOC Director'}
 ];
-var RANKS_CLOUD = [
-  {min:0,name:'Cloud Trainee'},{min:250,name:'Associate Administrator'},{min:600,name:'Azure Practitioner I'},
-  {min:1000,name:'Azure Practitioner II'},{min:1500,name:'Cloud Solutions Associate'},{min:2100,name:'Cloud Architect'},
-  {min:2800,name:'Senior Cloud Architect'},{min:3450,name:'Azure Specialist'},{min:3800,name:'Principal Cloud Architect'},
+var RANKS_AZURE = [
+  {min:0,name:'Azure Trainee'},{min:250,name:'Associate Administrator'},{min:600,name:'Azure Practitioner I'},
+  {min:1000,name:'Azure Practitioner II'},{min:1500,name:'Azure Solutions Associate'},{min:2100,name:'Azure Architect'},
+  {min:2800,name:'Senior Azure Architect'},{min:3450,name:'Azure Specialist'},{min:3800,name:'Principal Azure Architect'},
   {min:4200,name:'Azure MVP'}
+];
+var RANKS_AWS = [
+  {min:0,name:'AWS Trainee'},{min:250,name:'Associate Builder'},{min:600,name:'Cloud Practitioner I'},
+  {min:1000,name:'Cloud Practitioner II'},{min:1500,name:'AWS Solutions Associate'},{min:2100,name:'AWS Architect'},
+  {min:2800,name:'Senior AWS Architect'},{min:3450,name:'AWS Specialist'},{min:3800,name:'Principal AWS Architect'},
+  {min:4200,name:'AWS Hero'}
 ];
 
 /* ============================================================
    FINAL EXAMS (pooled from the domain quizzes above, mixed & weighted
    to roughly match each track's real exam domain weighting).
-   Cybersecurity: CS0-003 33/30/20/17. Cloud: AZ-900 25-30/35-40/30-35%.
+   Cybersecurity: CS0-003 33/30/20/17. Azure: AZ-900 25-30/35-40/30-35%.
+   AWS: CLF-C02 24/30/34/12.
 ============================================================ */
 var EXAM_POOL_CYBERSECURITY = {
   secops: QUIZZES.arch.concat(QUIZZES.indicators, QUIZZES.toolkit, QUIZZES.threatintel, QUIZZES.phishing, QUIZZES.archFundamentals, QUIZZES.toolsScripting),
@@ -2317,41 +2865,89 @@ var EXAM_TITLE_CYBERSECURITY = 'CS0-003 Final Exam';
 var EXAM_BLUEPRINT_CYBERSECURITY = 'CS0-003';
 var EXAM_CERTIFIED_LABEL_CYBERSECURITY = 'CySA+ Certified';
 
-var EXAM_POOL_CLOUD = {
+var EXAM_POOL_AZURE = {
   concepts: QUIZZES.cloudComputing.concat(QUIZZES.cloudBenefits, QUIZZES.serviceTypes),
   architecture: QUIZZES.coreArch.concat(QUIZZES.computeNetworking, QUIZZES.storageServices, QUIZZES.identitySecurity),
   governance: QUIZZES.costManagement.concat(QUIZZES.governanceCompliance, QUIZZES.managingDeploying, QUIZZES.monitoringTools)
 };
-var EXAM_COMPOSITION_CLOUD = [
+var EXAM_COMPOSITION_AZURE = [
   { domain:'concepts', label:'D1 Cloud Concepts', count:6 },
   { domain:'architecture', label:'D2 Azure Architecture & Services', count:8 },
   { domain:'governance', label:'D3 Azure Management & Governance', count:6 }
 ];
-var EXAM_PASS_PCT_CLOUD = 70;
-var EXAM_XP_CLOUD = 600;
-var EXAM_TITLE_CLOUD = 'AZ-900 Final Exam';
-var EXAM_BLUEPRINT_CLOUD = 'AZ-900';
-var EXAM_CERTIFIED_LABEL_CLOUD = 'AZ-900 Certified';
+var EXAM_PASS_PCT_AZURE = 70;
+var EXAM_XP_AZURE = 600;
+var EXAM_TITLE_AZURE = 'AZ-900 Final Exam';
+var EXAM_BLUEPRINT_AZURE = 'AZ-900';
+var EXAM_CERTIFIED_LABEL_AZURE = 'AZ-900 Certified';
+
+var EXAM_POOL_AWS = {
+  awsconcepts: QUIZZES.awsValueProp.concat(QUIZZES.awsWellArchitected),
+  awssecurity: QUIZZES.awsSharedResponsibility.concat(QUIZZES.awsIAM, QUIZZES.awsGovernanceSecurity),
+  awstech: QUIZZES.awsGlobalInfra.concat(QUIZZES.awsDeployOps, QUIZZES.awsCompute, QUIZZES.awsStorageDbNetwork),
+  awsbilling: QUIZZES.awsPricing.concat(QUIZZES.awsBillingSupport)
+};
+var EXAM_COMPOSITION_AWS = [
+  { domain:'awsconcepts', label:'D1 Cloud Concepts', count:5 },
+  { domain:'awssecurity', label:'D2 Security & Compliance', count:6 },
+  { domain:'awstech', label:'D3 Cloud Technology & Services', count:7 },
+  { domain:'awsbilling', label:'D4 Billing, Pricing & Support', count:2 }
+];
+var EXAM_PASS_PCT_AWS = 70;
+var EXAM_XP_AWS = 550;
+var EXAM_TITLE_AWS = 'CLF-C02 Final Exam';
+var EXAM_BLUEPRINT_AWS = 'CLF-C02';
+var EXAM_CERTIFIED_LABEL_AWS = 'AWS Cloud Practitioner Certified';
 
 /* ============================================================
    SECTIONS (top-level tracks above domains)
-   Cybersecurity carries all existing CS0-003 content. Cloud carries
-   the full AZ-900 curriculum. Networking remains a placeholder —
-   a real nav destination with its own progression, no content yet.
+   Cybersecurity and Networking are top-level leaf sections. Cloud is a
+   GROUP — a navigational container with no domains/state of its own —
+   holding two leaf subsections, Azure and AWS, each independently
+   tracked exactly like a top-level section. See "Sections architecture"
+   in DEVELOPMENT.md for how the group/leaf nesting works end to end.
 ============================================================ */
 var SECTIONS = [
-  { id:'cybersecurity', name:'Cybersecurity', tagline:'SOC training ground · CS0-003', status:'live', domains: DOMAINS_CYBERSECURITY,
+  { id:'cybersecurity', kind:'leaf', name:'Cybersecurity', tagline:'SOC training ground · CS0-003', status:'live', domains: DOMAINS_CYBERSECURITY,
     ranks: RANKS_CYBERSECURITY, examPool: EXAM_POOL_CYBERSECURITY, examComposition: EXAM_COMPOSITION_CYBERSECURITY,
     examPassPct: EXAM_PASS_PCT_CYBERSECURITY, examXP: EXAM_XP_CYBERSECURITY, examTitle: EXAM_TITLE_CYBERSECURITY,
     examBlueprint: EXAM_BLUEPRINT_CYBERSECURITY, examCertifiedLabel: EXAM_CERTIFIED_LABEL_CYBERSECURITY },
-  { id:'cloud', name:'Cloud', tagline:'Azure fundamentals training ground · AZ-900', status:'live', domains: DOMAINS_CLOUD,
-    ranks: RANKS_CLOUD, examPool: EXAM_POOL_CLOUD, examComposition: EXAM_COMPOSITION_CLOUD,
-    examPassPct: EXAM_PASS_PCT_CLOUD, examXP: EXAM_XP_CLOUD, examTitle: EXAM_TITLE_CLOUD,
-    examBlueprint: EXAM_BLUEPRINT_CLOUD, examCertifiedLabel: EXAM_CERTIFIED_LABEL_CLOUD },
-  { id:'networking', name:'Networking', tagline:'Network engineering & defense.', status:'coming-soon', domains: [],
+  { id:'cloud', kind:'group', name:'Cloud', tagline:'Pick a cloud platform to train in.', status:'live',
+    subsections: [
+      { id:'azure', kind:'leaf', name:'Azure', tagline:'Azure fundamentals training ground · AZ-900', status:'live', domains: DOMAINS_AZURE,
+        ranks: RANKS_AZURE, examPool: EXAM_POOL_AZURE, examComposition: EXAM_COMPOSITION_AZURE,
+        examPassPct: EXAM_PASS_PCT_AZURE, examXP: EXAM_XP_AZURE, examTitle: EXAM_TITLE_AZURE,
+        examBlueprint: EXAM_BLUEPRINT_AZURE, examCertifiedLabel: EXAM_CERTIFIED_LABEL_AZURE },
+      { id:'aws', kind:'leaf', name:'AWS', tagline:'AWS fundamentals training ground · CLF-C02', status:'live', domains: DOMAINS_AWS,
+        ranks: RANKS_AWS, examPool: EXAM_POOL_AWS, examComposition: EXAM_COMPOSITION_AWS,
+        examPassPct: EXAM_PASS_PCT_AWS, examXP: EXAM_XP_AWS, examTitle: EXAM_TITLE_AWS,
+        examBlueprint: EXAM_BLUEPRINT_AWS, examCertifiedLabel: EXAM_CERTIFIED_LABEL_AWS }
+    ]
+  },
+  { id:'networking', kind:'leaf', name:'Networking', tagline:'Network engineering & defense.', status:'coming-soon', domains: [],
     ranks: RANKS_CYBERSECURITY, examPool: {}, examComposition: [], examPassPct: 80, examXP: 0, examTitle: '', examBlueprint: '', examCertifiedLabel: '' }
 ];
-function sectionById(id){ for(var i=0;i<SECTIONS.length;i++){ if(SECTIONS[i].id===id) return SECTIONS[i]; } return null; }
+/* Flat list of every leaf section (a group's subsections are hoisted up into
+   this list), used for lookups/state — SECTIONS itself stays a tree for nav
+   rendering, since a group has no state/domains of its own to look up. */
+var LEAF_SECTIONS = [];
+SECTIONS.forEach(function(sec){
+  if(sec.kind === 'group') sec.subsections.forEach(function(sub){ LEAF_SECTIONS.push(sub); });
+  else LEAF_SECTIONS.push(sec);
+});
+function sectionById(id){ for(var i=0;i<LEAF_SECTIONS.length;i++){ if(LEAF_SECTIONS[i].id===id) return LEAF_SECTIONS[i]; } return null; }
+function groupById(id){ for(var i=0;i<SECTIONS.length;i++){ if(SECTIONS[i].id===id && SECTIONS[i].kind==='group') return SECTIONS[i]; } return null; }
+/* Given a leaf section id, returns the group object it's nested under, or null
+   if it's a top-level leaf (like cybersecurity/networking). Powers the "Cloud /"
+   breadcrumb prefix and the nav's group-expansion logic. */
+function parentGroupOf(leafId){
+  for(var i=0;i<SECTIONS.length;i++){
+    if(SECTIONS[i].kind==='group'){
+      for(var j=0;j<SECTIONS[i].subsections.length;j++){ if(SECTIONS[i].subsections[j].id===leafId) return SECTIONS[i]; }
+    }
+  }
+  return null;
+}
 
 /* currentSectionId/DOMAINS/state/RANKS/EXAM_* (declared below) are reassigned
    together whenever the active section changes (see setSection()) — every
@@ -2427,7 +3023,7 @@ function normalizeSectionStates(raw){
   raw = raw || {};
   var legacy = raw.xp !== undefined || raw.completed !== undefined;
   var out = {};
-  SECTIONS.forEach(function(sec){
+  LEAF_SECTIONS.forEach(function(sec){
     if(legacy) out[sec.id] = sec.id === 'cybersecurity' ? normalizeSectionState(raw) : normalizeSectionState(null);
     else out[sec.id] = normalizeSectionState(raw[sec.id]);
   });
@@ -2543,37 +3139,77 @@ function renderChrome(){
   var nav = document.getElementById('nav-list');
   var html = '';
   html += '<button class="nav-item ' + (view.type==='home'?'active':'') + '" data-nav="home"><span class="dot"></span><span class="n-title">Home</span></button>';
+  /* True only for views that actually put us "inside" a leaf section (as
+     opposed to 'home' or 'group', where currentSectionId is stale/irrelevant
+     — it's whatever leaf was last active, not the page being shown). Used to
+     gate section/group nav-item expansion so a stale currentSectionId can't
+     leak an unrelated section's domain list open on the Home or a group page. */
+  var isLeafView = view.type==='dashboard'||view.type==='domain'||view.type==='lesson'||view.type==='lab'||view.type==='exam';
+
+  /* Renders the domain list + exam nav-item for one active leaf section,
+     at the given indent level (1 = directly under a top-level leaf,
+     2 = under a leaf nested inside a group). Shared by both branches below. */
+  function appendDomainNav(sec, level){
+    var subCls = level===2 ? 'nav-item nav-sub nav-sub2' : 'nav-item nav-sub';
+    var barCls = level===2 ? 'nav-mini-bar sub2' : 'nav-mini-bar';
+    sec.domains.forEach(function(d){
+      var p = domainProgress(d);
+      var dcls = subCls;
+      if((view.type==='domain'||view.type==='lesson'||view.type==='lab') && view.domainId===d.id) dcls += ' active';
+      if(d.status==='live') dcls += ' live';
+      if(p.pct===100) dcls += ' done';
+      html += '<button class="'+dcls+'" data-nav="domain" data-domain="'+d.id+'">'+
+        '<span class="dot"></span><span class="n-title">'+d.code+' &middot; '+d.name+'</span><span class="n-pct">'+p.pct+'%</span></button>'+
+        '<div class="'+barCls+'"><i style="width:'+p.pct+'%"></i></div>';
+    });
+    var examCls = subCls + ' exam-nav';
+    if(view.type==='exam') examCls += ' active';
+    if(state.examPassed) examCls += ' done';
+    html += '<button class="'+examCls+'" data-nav="exam"><span class="dot"></span><span class="n-title">&#127942; Final Exam</span>'+
+      (state.examPassed ? '<span class="n-pct">PASS</span>' : '')+'</button>';
+  }
+
   SECTIONS.forEach(function(sec){
-    var isActiveSection = view.type!=='home' && currentSectionId===sec.id;
-    var cls = 'nav-item';
-    if(isActiveSection && view.type==='dashboard') cls += ' active';
-    if(sec.status==='live') cls += ' live';
-    html += '<button class="'+cls+'" data-nav="section" data-section="'+sec.id+'">'+
-      '<span class="dot"></span><span class="n-title">'+sec.name+'</span>'+
-      (sec.status==='coming-soon' ? '<span class="n-pct">Soon</span>' : '')+'</button>';
-    if(isActiveSection && sec.domains.length){
-      sec.domains.forEach(function(d){
-        var p = domainProgress(d);
-        var dcls = 'nav-item nav-sub';
-        if((view.type==='domain'||view.type==='lesson'||view.type==='lab') && view.domainId===d.id) dcls += ' active';
-        if(d.status==='live') dcls += ' live';
-        if(p.pct===100) dcls += ' done';
-        html += '<button class="'+dcls+'" data-nav="domain" data-domain="'+d.id+'">'+
-          '<span class="dot"></span><span class="n-title">'+d.code+' &middot; '+d.name+'</span><span class="n-pct">'+p.pct+'%</span></button>'+
-          '<div class="nav-mini-bar"><i style="width:'+p.pct+'%"></i></div>';
-      });
-      var examCls = 'nav-item nav-sub exam-nav';
-      if(view.type==='exam') examCls += ' active';
-      if(state.examPassed) examCls += ' done';
-      html += '<button class="'+examCls+'" data-nav="exam"><span class="dot"></span><span class="n-title">&#127942; Final Exam</span>'+
-        (state.examPassed ? '<span class="n-pct">PASS</span>' : '')+'</button>';
+    if(sec.kind === 'group'){
+      var activeLeafInGroup = isLeafView && parentGroupOf(currentSectionId) === sec;
+      var isGroupView = view.type==='group' && view.groupId===sec.id;
+      var isActiveGroup = activeLeafInGroup || isGroupView;
+      var gcls = 'nav-item';
+      if(isActiveGroup) gcls += ' active';
+      if(sec.status==='live') gcls += ' live';
+      html += '<button class="'+gcls+'" data-nav="group" data-group="'+sec.id+'">'+
+        '<span class="dot"></span><span class="n-title">'+sec.name+'</span></button>';
+      if(isActiveGroup){
+        sec.subsections.forEach(function(sub){
+          var subIsActive = isLeafView && currentSectionId === sub.id;
+          var subOp = sectionOverallProgress(sub);
+          var scls = 'nav-item nav-sub';
+          if(subIsActive && view.type==='dashboard') scls += ' active';
+          if(sub.status==='live') scls += ' live';
+          if(subOp.pct===100) scls += ' done';
+          html += '<button class="'+scls+'" data-nav="leaf" data-leaf="'+sub.id+'">'+
+            '<span class="dot"></span><span class="n-title">'+sub.name+'</span><span class="n-pct">'+subOp.pct+'%</span></button>';
+          if(subIsActive && sub.domains.length) appendDomainNav(sub, 2);
+        });
+      }
+    } else {
+      var isActiveSection = isLeafView && currentSectionId===sec.id;
+      var cls = 'nav-item';
+      if(isActiveSection && view.type==='dashboard') cls += ' active';
+      if(sec.status==='live') cls += ' live';
+      html += '<button class="'+cls+'" data-nav="section" data-section="'+sec.id+'">'+
+        '<span class="dot"></span><span class="n-title">'+sec.name+'</span>'+
+        (sec.status==='coming-soon' ? '<span class="n-pct">Soon</span>' : '')+'</button>';
+      if(isActiveSection && sec.domains.length) appendDomainNav(sec, 1);
     }
   });
   nav.innerHTML = html;
   nav.querySelectorAll('[data-nav]').forEach(function(btn){
     btn.addEventListener('click', function(){
       if(btn.dataset.nav==='home') go({type:'home'});
+      else if(btn.dataset.nav==='group') go({type:'group', groupId:btn.dataset.group});
       else if(btn.dataset.nav==='section') go({type:'dashboard', sectionId:btn.dataset.section});
+      else if(btn.dataset.nav==='leaf') go({type:'dashboard', sectionId:btn.dataset.leaf});
       else if(btn.dataset.nav==='exam') go({type:'exam', sectionId:currentSectionId});
       else go({type:'domain', domainId:btn.dataset.domain, sectionId:currentSectionId});
     });
@@ -2581,12 +3217,17 @@ function renderChrome(){
 
   var crumbEl = document.getElementById('crumb');
   if(view.type==='home') crumbEl.innerHTML = '<b>Home</b>';
-  else {
+  else if(view.type==='group'){
+    var grp = groupById(view.groupId);
+    crumbEl.innerHTML = 'Home / <b>'+grp.name+'</b>';
+  } else {
     var secLabel = sectionById(currentSectionId).name;
-    if(view.type==='dashboard') crumbEl.innerHTML = 'Home / <b>'+secLabel+'</b>';
-    else if(view.type==='domain'){ var d=domainById(view.domainId); crumbEl.innerHTML = 'Home / '+secLabel+' / <b>'+d.name+'</b>'; }
-    else if(view.type==='lesson' || view.type==='lab'){ var d2=domainById(view.domainId); crumbEl.innerHTML = 'Home / '+secLabel+' / '+d2.name+' / <b>'+view.title+'</b>'; }
-    else if(view.type==='exam'){ crumbEl.innerHTML = 'Home / '+secLabel+' / <b>Final Exam</b>'; }
+    var parentGrp = parentGroupOf(currentSectionId);
+    var crumbPrefix = parentGrp ? parentGrp.name+' / ' : '';
+    if(view.type==='dashboard') crumbEl.innerHTML = 'Home / '+crumbPrefix+'<b>'+secLabel+'</b>';
+    else if(view.type==='domain'){ var d=domainById(view.domainId); crumbEl.innerHTML = 'Home / '+crumbPrefix+secLabel+' / <b>'+d.name+'</b>'; }
+    else if(view.type==='lesson' || view.type==='lab'){ var d2=domainById(view.domainId); crumbEl.innerHTML = 'Home / '+crumbPrefix+secLabel+' / '+d2.name+' / <b>'+view.title+'</b>'; }
+    else if(view.type==='exam'){ crumbEl.innerHTML = 'Home / '+crumbPrefix+secLabel+' / <b>Final Exam</b>'; }
   }
 }
 
@@ -2648,32 +3289,73 @@ function renderDashboard(){
 }
 
 /* ============================================================
-   RENDER: HOME (top-level, lists all sections)
+   RENDER: HOME (top-level, lists all sections) + GROUP (a group's
+   own subsection list, e.g. Cloud -> Azure/AWS)
 ============================================================ */
-function renderHome(){
-  var html = '<div class="hero"><div><h1>Welcome back, Analyst.</h1><p>Pick a track to train in. XP, rank, and streak are tracked separately for each one.</p></div></div>';
-  html += '<div class="path">';
-  SECTIONS.forEach(function(sec){
-    var st = sectionStates[sec.id];
-    var rank = getRank(st.xp, sec.ranks);
-    var op = sectionOverallProgress(sec);
-    var hasContent = sec.domains.length > 0;
-    var stateCls = sec.status==='coming-soon' ? 'preview' : (hasContent && op.pct===100 ? 'complete' : 'live');
-    html += '<div class="domain-node '+stateCls+'" data-open-section="'+sec.id+'">'+
-      '<div class="node-marker">'+ (hasContent && op.pct===100 ? '&#10003;' : sec.name.charAt(0)) +'</div>'+
+/* Renders one card for either a leaf section (own domains/XP/rank) or a
+   group (aggregated progress/XP across its subsections, no domains of its
+   own) — shared by renderHome() (top-level SECTIONS) and renderGroupPage()
+   (a single group's subsections, which are always leaves). */
+function renderSectionCard(item){
+  if(item.kind === 'group'){
+    var doneTotal=0, totalTotal=0, xpTotal=0;
+    item.subsections.forEach(function(sub){
+      var st = sectionStates[sub.id];
+      xpTotal += st.xp;
+      sub.domains.forEach(function(d){ d.nodes.forEach(function(n){ totalTotal++; if(st.completed[n.id]) doneTotal++; }); });
+    });
+    var gpct = totalTotal ? Math.round(doneTotal/totalTotal*100) : 0;
+    var gStateCls = gpct===100 ? 'complete' : 'live';
+    return '<div class="domain-node '+gStateCls+'" data-open-group="'+item.id+'">'+
+      '<div class="node-marker">'+ (gpct===100 ? '&#10003;' : item.name.charAt(0)) +'</div>'+
       '<div class="domain-card"><div class="domain-card-top">'+
-        '<div><div class="domain-title">'+sec.name+'</div><p class="domain-tagline">'+sec.tagline+'</p></div>'+
-        '<div style="display:flex;gap:6px;flex:none">'+
-        (sec.status==='coming-soon' ? '<span class="badge preview">Coming soon</span>' : '<span class="badge weight">'+rank.name+' &middot; '+st.xp+' XP</span>')+
-        '</div></div>'+
-        (hasContent ? '<div class="domain-progress-bar"><i style="width:'+op.pct+'%"></i></div><div style="font-family:var(--font-mono);font-size:.7rem;color:var(--text-faint);margin-top:6px">'+op.done+' / '+op.total+' modules complete</div>' : '')+
+        '<div><div class="domain-title">'+item.name+'</div><p class="domain-tagline">'+item.tagline+'</p></div>'+
+        '<div style="display:flex;gap:6px;flex:none"><span class="badge weight">'+item.subsections.length+' tracks &middot; '+xpTotal+' XP</span></div>'+
+      '</div><div class="domain-progress-bar"><i style="width:'+gpct+'%"></i></div>'+
+      '<div style="font-family:var(--font-mono);font-size:.7rem;color:var(--text-faint);margin-top:6px">'+doneTotal+' / '+totalTotal+' modules complete across '+item.subsections.length+' tracks</div>'+
       '</div></div>';
-  });
-  html += '</div>';
-  document.getElementById('view').innerHTML = html;
+  }
+  var st = sectionStates[item.id];
+  var rank = getRank(st.xp, item.ranks);
+  var op = sectionOverallProgress(item);
+  var hasContent = item.domains.length > 0;
+  var stateCls = item.status==='coming-soon' ? 'preview' : (hasContent && op.pct===100 ? 'complete' : 'live');
+  return '<div class="domain-node '+stateCls+'" data-open-section="'+item.id+'">'+
+    '<div class="node-marker">'+ (hasContent && op.pct===100 ? '&#10003;' : item.name.charAt(0)) +'</div>'+
+    '<div class="domain-card"><div class="domain-card-top">'+
+      '<div><div class="domain-title">'+item.name+'</div><p class="domain-tagline">'+item.tagline+'</p></div>'+
+      '<div style="display:flex;gap:6px;flex:none">'+
+      (item.status==='coming-soon' ? '<span class="badge preview">Coming soon</span>' : '<span class="badge weight">'+rank.name+' &middot; '+st.xp+' XP</span>')+
+      '</div></div>'+
+      (hasContent ? '<div class="domain-progress-bar"><i style="width:'+op.pct+'%"></i></div><div style="font-family:var(--font-mono);font-size:.7rem;color:var(--text-faint);margin-top:6px">'+op.done+' / '+op.total+' modules complete</div>' : '')+
+    '</div></div>';
+}
+function wireSectionCards(){
   document.querySelectorAll('[data-open-section]').forEach(function(el){
     el.addEventListener('click', function(){ go({type:'dashboard', sectionId: el.dataset.openSection}); });
   });
+  document.querySelectorAll('[data-open-group]').forEach(function(el){
+    el.addEventListener('click', function(){ go({type:'group', groupId: el.dataset.openGroup}); });
+  });
+}
+function renderHome(){
+  var html = '<div class="hero"><div><h1>Welcome back, Analyst.</h1><p>Pick a track to train in. XP, rank, and streak are tracked separately for each one.</p></div></div>';
+  html += '<div class="path">';
+  SECTIONS.forEach(function(sec){ html += renderSectionCard(sec); });
+  html += '</div>';
+  document.getElementById('view').innerHTML = html;
+  wireSectionCards();
+}
+function renderGroupPage(groupId){
+  var grp = groupById(groupId);
+  var html = '<button class="back-link" id="back-btn">&#8592; Home</button>';
+  html += '<div class="hero"><div><h1>'+grp.name+'</h1><p>'+grp.tagline+'</p></div></div>';
+  html += '<div class="path">';
+  grp.subsections.forEach(function(sub){ html += renderSectionCard(sub); });
+  html += '</div>';
+  document.getElementById('view').innerHTML = html;
+  document.getElementById('back-btn').addEventListener('click', function(){ go({type:'home'}); });
+  wireSectionCards();
 }
 
 /* ============================================================
@@ -3088,6 +3770,7 @@ function mountExam(mount){
 function render(){
   renderChrome();
   if(view.type==='home') renderHome();
+  else if(view.type==='group') renderGroupPage(view.groupId);
   else if(view.type==='dashboard') renderDashboard();
   else if(view.type==='domain') renderDomain(view.domainId);
   else if(view.type==='lesson') renderLesson(view.domainId, view.nodeId);
