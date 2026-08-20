@@ -3099,6 +3099,24 @@ function escapeHtml(s){
 function domainById(id){ for(var i=0;i<DOMAINS.length;i++){ if(DOMAINS[i].id===id) return DOMAINS[i]; } return null; }
 function nodeById(domain, id){ for(var i=0;i<domain.nodes.length;i++){ if(domain.nodes[i].id===id) return domain.nodes[i]; } return null; }
 
+function findNextTarget(domain, node){
+  var idx = -1;
+  for(var i=0;i<domain.nodes.length;i++){ if(domain.nodes[i].id===node.id){ idx=i; break; } }
+  if(idx > -1 && idx+1 < domain.nodes.length){
+    return { node: domain.nodes[idx+1], domainId: domain.id };
+  }
+  var dIdx = -1;
+  for(var j=0;j<DOMAINS.length;j++){ if(DOMAINS[j].id===domain.id){ dIdx=j; break; } }
+  if(dIdx > -1){
+    for(var k=dIdx+1;k<DOMAINS.length;k++){
+      if(DOMAINS[k].nodes && DOMAINS[k].nodes.length){
+        return { node: DOMAINS[k].nodes[0], domainId: DOMAINS[k].id };
+      }
+    }
+  }
+  return null;
+}
+
 function domainProgress(domain){
   var total = domain.nodes.length, done = 0;
   domain.nodes.forEach(function(n){ if(state.completed[n.id]) done++; });
@@ -3448,6 +3466,11 @@ function mountQuiz(mount, quizRaw, node, domain){
       html += '<span class="quiz-score">Score: '+correctCount+'/'+quiz.length+' ('+pct+'%) &middot; '+(passed?'<b style="color:#3aa35a">PASSED</b>':'<b style="color:var(--sev-critical)">Try again</b>')+'</span>';
       if(!passed) html += '<button class="btn" id="quiz-retry">Retry quiz</button>';
       else if(!state.completed[node.id]) html += '<span class="quiz-score" id="quiz-award-note">Module complete!</span>';
+      if(pct === 100){
+        var nextTarget = findNextTarget(domain, node);
+        if(nextTarget) html += '<button class="btn btn-primary" id="quiz-next">Next: '+nextTarget.node.title+' &#8594;</button>';
+        else html += '<span class="quiz-score" style="color:#3aa35a">You&rsquo;ve reached the end of this track!</span>';
+      }
     }
     html += '</div>';
     mount.innerHTML = html;
@@ -3481,6 +3504,15 @@ function mountQuiz(mount, quizRaw, node, domain){
     var retryBtn = document.getElementById('quiz-retry');
     if(retryBtn){
       retryBtn.addEventListener('click', function(){ submitted=false; picks = new Array(quiz.length).fill(null); draw(); });
+    }
+    var nextBtn = document.getElementById('quiz-next');
+    if(nextBtn){
+      nextBtn.addEventListener('click', function(){
+        var nt = findNextTarget(domain, node);
+        if(!nt) return;
+        if(nt.node.type==='lesson') go({type:'lesson', domainId:nt.domainId, nodeId:nt.node.id, title:nt.node.title, sectionId:currentSectionId});
+        else go({type:'lab', domainId:nt.domainId, nodeId:nt.node.id, title:nt.node.title, sectionId:currentSectionId});
+      });
     }
   }
   draw();
